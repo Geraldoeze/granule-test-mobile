@@ -10,11 +10,20 @@
 		00E356F31AD99517003FC87E /* GranuleMobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* GranuleMobileTests.m */; };
 		04B426C2EB0CE38208148EBB /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		0C80B921A6F3F58F76C31292 /* libPods-GranuleMobile.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-GranuleMobile.a */; };
+		0E3511BC99FA43C39F3FCA97 /* Outfit Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ECFED977E6BD44B1A4A66409 /* Outfit Regular.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1DA74AB7411B4CD89CD1F484 /* Outfit Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2DEA6809E8F44E0D98FAA528 /* Outfit Light.ttf */; };
+		3A26CEB99F444992B5D904A9 /* Outfit Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0D2E12E13F7B4353B986D9BB /* Outfit Bold.ttf */; };
+		3E18729945BD46438F88B79D /* Outfit ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BCEDCC9418054471AB3DD5BC /* Outfit ExtraLight.ttf */; };
+		48F205E0E9584D1AA03F887A /* Outfit Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8B1284DADC2549FF96827997 /* Outfit Black.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-GranuleMobile-GranuleMobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-GranuleMobile-GranuleMobileTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9C033A56B9DC44A1B1C4EB99 /* Outfit SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 135B48A17A124E07BA9C3050 /* Outfit SemiBold.ttf */; };
+		D0270168E82B4B0DB9330A79 /* Outfit ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9936A15236044721996D2324 /* Outfit ExtraBold.ttf */; };
+		DB0C876FC6F24313BBDD1E42 /* Outfit Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B3F3737EECDD498B9662514B /* Outfit Thin.ttf */; };
+		EBF499AD070045A0AC807D12 /* Outfit Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AB1E898629C54D488BEF6EB3 /* Outfit Medium.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +40,8 @@
 		00E356EE1AD99517003FC87E /* GranuleMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GranuleMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* GranuleMobileTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GranuleMobileTests.m; sourceTree = "<group>"; };
+		0D2E12E13F7B4353B986D9BB /* Outfit Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Outfit Bold.ttf"; path = "../assets/fonts/Outfit Bold.ttf"; sourceTree = "<group>"; };
+		135B48A17A124E07BA9C3050 /* Outfit SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Outfit SemiBold.ttf"; path = "../assets/fonts/Outfit SemiBold.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* GranuleMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GranuleMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = GranuleMobile/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = GranuleMobile/AppDelegate.mm; sourceTree = "<group>"; };
@@ -39,12 +50,19 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = GranuleMobile/main.m; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = GranuleMobile/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-GranuleMobile-GranuleMobileTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GranuleMobile-GranuleMobileTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DEA6809E8F44E0D98FAA528 /* Outfit Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Outfit Light.ttf"; path = "../assets/fonts/Outfit Light.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-GranuleMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GranuleMobile.debug.xcconfig"; path = "Target Support Files/Pods-GranuleMobile/Pods-GranuleMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-GranuleMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GranuleMobile.release.xcconfig"; path = "Target Support Files/Pods-GranuleMobile/Pods-GranuleMobile.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-GranuleMobile-GranuleMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GranuleMobile-GranuleMobileTests.debug.xcconfig"; path = "Target Support Files/Pods-GranuleMobile-GranuleMobileTests/Pods-GranuleMobile-GranuleMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-GranuleMobile.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GranuleMobile.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = GranuleMobile/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-GranuleMobile-GranuleMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GranuleMobile-GranuleMobileTests.release.xcconfig"; path = "Target Support Files/Pods-GranuleMobile-GranuleMobileTests/Pods-GranuleMobile-GranuleMobileTests.release.xcconfig"; sourceTree = "<group>"; };
+		8B1284DADC2549FF96827997 /* Outfit Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Outfit Black.ttf"; path = "../assets/fonts/Outfit Black.ttf"; sourceTree = "<group>"; };
+		9936A15236044721996D2324 /* Outfit ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Outfit ExtraBold.ttf"; path = "../assets/fonts/Outfit ExtraBold.ttf"; sourceTree = "<group>"; };
+		AB1E898629C54D488BEF6EB3 /* Outfit Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Outfit Medium.ttf"; path = "../assets/fonts/Outfit Medium.ttf"; sourceTree = "<group>"; };
+		B3F3737EECDD498B9662514B /* Outfit Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Outfit Thin.ttf"; path = "../assets/fonts/Outfit Thin.ttf"; sourceTree = "<group>"; };
+		BCEDCC9418054471AB3DD5BC /* Outfit ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Outfit ExtraLight.ttf"; path = "../assets/fonts/Outfit ExtraLight.ttf"; sourceTree = "<group>"; };
+		ECFED977E6BD44B1A4A66409 /* Outfit Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Outfit Regular.ttf"; path = "../assets/fonts/Outfit Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -125,6 +143,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				84C86307C94741C183F6FB81 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -138,6 +157,23 @@
 				00E356EE1AD99517003FC87E /* GranuleMobileTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		84C86307C94741C183F6FB81 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8B1284DADC2549FF96827997 /* Outfit Black.ttf */,
+				0D2E12E13F7B4353B986D9BB /* Outfit Bold.ttf */,
+				9936A15236044721996D2324 /* Outfit ExtraBold.ttf */,
+				BCEDCC9418054471AB3DD5BC /* Outfit ExtraLight.ttf */,
+				2DEA6809E8F44E0D98FAA528 /* Outfit Light.ttf */,
+				AB1E898629C54D488BEF6EB3 /* Outfit Medium.ttf */,
+				ECFED977E6BD44B1A4A66409 /* Outfit Regular.ttf */,
+				135B48A17A124E07BA9C3050 /* Outfit SemiBold.ttf */,
+				B3F3737EECDD498B9662514B /* Outfit Thin.ttf */,
+			);
+			name = Resources;
+			path = "";
 			sourceTree = "<group>";
 		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
@@ -247,6 +283,15 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				04B426C2EB0CE38208148EBB /* PrivacyInfo.xcprivacy in Resources */,
+				48F205E0E9584D1AA03F887A /* Outfit Black.ttf in Resources */,
+				3A26CEB99F444992B5D904A9 /* Outfit Bold.ttf in Resources */,
+				D0270168E82B4B0DB9330A79 /* Outfit ExtraBold.ttf in Resources */,
+				3E18729945BD46438F88B79D /* Outfit ExtraLight.ttf in Resources */,
+				1DA74AB7411B4CD89CD1F484 /* Outfit Light.ttf in Resources */,
+				EBF499AD070045A0AC807D12 /* Outfit Medium.ttf in Resources */,
+				0E3511BC99FA43C39F3FCA97 /* Outfit Regular.ttf in Resources */,
+				9C033A56B9DC44A1B1C4EB99 /* Outfit SemiBold.ttf in Resources */,
+				DB0C876FC6F24313BBDD1E42 /* Outfit Thin.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
