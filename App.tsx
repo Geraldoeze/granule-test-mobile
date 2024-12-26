@@ -8,15 +8,14 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import MainStack from './src/navigation/MainStack';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 function App(): React.JSX.Element {
   return (
     <SafeAreaProvider>
-    <NavigationContainer>
-      <MainStack />
-    </NavigationContainer>
+      <NavigationContainer>
+        <MainStack />
+      </NavigationContainer>
     </SafeAreaProvider>
   );
 }

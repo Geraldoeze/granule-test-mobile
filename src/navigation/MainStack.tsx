@@ -1,7 +1,22 @@
 import React, {useState, useEffect} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+
+// screen
 import OnboardingStack from './OnboardingStack';
 
+// ui
 import SplashLoading from '../components/display/SplashLoading';
+
+export type RootStackParamList = {
+  SignInScreen: undefined;
+  HomeScreen: undefined;
+  SplashIntroScreen: undefined;
+};
+
+export function useAppNavigation() {
+  return useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+}
 
 const MainStack = () => {
   const [isSplashVisible, setIsSplashVisible] = useState(true);

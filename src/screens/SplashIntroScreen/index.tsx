@@ -6,14 +6,14 @@ import {fontFamily} from '../../constants/fonts';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import PrimaryButton from '../../components/display/PrimaryButton';
 import {Colors} from '../../constants/colors';
-
-
+import {useAppNavigation} from '../../navigation/MainStack';
 
 const SplashIntroScreen = ({}) => {
+  const navigation = useAppNavigation();
 
-  // const handleLoginNavigate = () => {
-  //   navigation.navigate('SignInScreen'); // Navigate to SignInScreen
-  // };
+  const handle_login = () => {
+    navigation.navigate('SignInScreen'); // Navigate to SignInScreen
+  };
   return (
     <PrimaryView
       style={{
@@ -74,7 +74,7 @@ const SplashIntroScreen = ({}) => {
                 marginTop: 20,
               }}>
               <PrimaryButton
-                onPress={() => {}}
+                onPress={handle_login}
                 button_title={'Login'}
                 container_style={{
                   backgroundColor: '#FFFFFF40',

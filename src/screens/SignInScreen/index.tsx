@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Image, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {Colors} from '../../constants/colors';
-import {TextInput} from '@react-native-material/core';
+import {TextInput, IconButton} from '@react-native-material/core';
 import PrimaryButton from '../../components/display/PrimaryButton';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const SignInScreen = () => {
+  const [show_password, setShow_password] = useState(false);
+
   return (
     <View
       style={[
@@ -50,7 +53,20 @@ const SignInScreen = () => {
               variant="standard"
               label=""
               color={Colors.general.primary}
+              secureTextEntry={!show_password} // Toggle secure text entry
               style={{}}
+              trailing={
+                <IconButton
+                  icon={props => (
+                    <Ionicons
+                      name={show_password ? 'eye-outline' : 'eye-off-outline'}
+                      size={24}
+                      color={Colors.general.primary}
+                    />
+                  )}
+                  onPress={() => setShow_password(prev => !prev)}
+                />
+              }
             />
           </View>
 
