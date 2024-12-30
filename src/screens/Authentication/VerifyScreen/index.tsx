@@ -1,5 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { Button, Pressable, Text, View } from "react-native";
 import { Colors, useTheme } from "../../../constants/colors";
 import { TextInput } from "@react-native-material/core";
 import PrimaryButton from "../../../components/display/PrimaryButton";
@@ -12,6 +18,10 @@ import {
 import AuthBackBtn from "../../../components/display/AuthBackBtn";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import { useBottomSheet } from "../../../hooks/BottomSheetProvider";
+
 type VerifyScreenProps = NativeStackScreenProps<
   RootStackParamList,
   "VerifyScreen"
@@ -19,9 +29,19 @@ type VerifyScreenProps = NativeStackScreenProps<
 
 const VerifyScreen: React.FC<VerifyScreenProps> = ({ route }) => {
   const { previous_screen } = route.params;
+  const { openBottomSheet, closeBottomSheet } = useBottomSheet();
 
   const navigation = useAppNavigation();
   const theme = useTheme();
+
+  const handleOpenSheet = () => {
+    openBottomSheet(
+      <View style={styles.content}>
+        <Button title="Close Bottom Sheet" onPress={closeBottomSheet} />
+      </View>,
+      ["50%", "75%"] // Optional custom snap points
+    );
+  };
 
   const handle_navigation = () => {
     if (previous_screen === "SignInScreen") {
@@ -57,68 +77,72 @@ const VerifyScreen: React.FC<VerifyScreenProps> = ({ route }) => {
   };
 
   return (
-    <AuthBackground>
-      <AuthBackBtn onpress={() => navigation.goBack()} />
+    <View style={{ flex: 1 }}>
+      <AuthBackground>
+        <AuthBackBtn onpress={() => navigation.goBack()} />
 
-      <View style={styles.backCover}>
-        <Text style={[styles.text, { color: theme.auth_text1 }]}>
-          Verify account
-        </Text>
-        <Text style={[styles.text1, { color: theme.auth_text2 }]}>
-          OTP have been sent to{" "}
-          <Text style={[styles.text1, { color: theme.dark }]}>
-            Josephdesign@demo.com
+        <View style={styles.backCover}>
+          <Text style={[styles.text, { color: theme.auth_text1 }]}>
+            Verify account
           </Text>
-        </Text>
-        <View style={styles.inputCover}>
-          <Text
-            style={[
-              styles.text2,
-              {
-                color: Colors.general.primary,
-              },
-            ]}
-          >
-            OTP
+          <Text style={[styles.text1, { color: theme.auth_text2 }]}>
+            OTP have been sent to{" "}
+            <Text style={[styles.text1, { color: theme.dark }]}>
+              Josephdesign@demo.com
+            </Text>
           </Text>
-          <TextInput
-            variant="standard"
-            label=""
-            value={input_value}
-            onChangeText={handleInputChange}
-            keyboardType="numeric"
-            placeholder="0 - 0 - 0 - 0 - 0 - 0"
-            color={Colors.general.primary}
-            inputStyle={styles.inputStyle}
+          <View style={styles.inputCover}>
+            <Text
+              style={[
+                styles.text2,
+                {
+                  color: Colors.general.primary,
+                },
+              ]}
+            >
+              OTP
+            </Text>
+            <TextInput
+              variant="standard"
+              label=""
+              value={input_value}
+              onChangeText={handleInputChange}
+              keyboardType="numeric"
+              placeholder="0 - 0 - 0 - 0 - 0 - 0"
+              color={Colors.general.primary}
+              inputStyle={styles.inputStyle}
+            />
+          </View>
+
+          <View style={styles.bottomTextCover}>
+            <Pressable onPress={() => navigation.goBack()}>
+              <Text style={[styles.text3, { color: theme.primary }]}>
+                Change email
+              </Text>
+            </Pressable>
+            <Pressable>
+              <Text style={[styles.text4, { color: theme.auth_text3 }]}>
+                Resend OTP
+              </Text>
+            </Pressable>
+          </View>
+          <PrimaryButton
+            onPress={handle_navigation}
+            button_title={"Verify"}
+            container_style={{
+              borderRadius: 20,
+              width: "100%",
+              height: 70,
+              marginVertical: 10,
+              backgroundColor: Colors.general.primary,
+            }}
+            text_style={{ color: "white" }}
           />
         </View>
-
-        <View style={styles.bottomTextCover}>
-          <Pressable onPress={() => navigation.goBack()}>
-            <Text style={[styles.text3, { color: theme.primary }]}>
-              Change email
-            </Text>
-          </Pressable>
-          <Pressable>
-            <Text style={[styles.text4, { color: theme.auth_text3 }]}>
-              Resend OTP
-            </Text>
-          </Pressable>
-        </View>
-        <PrimaryButton
-          onPress={handle_navigation}
-          button_title={"Verify"}
-          container_style={{
-            borderRadius: 20,
-            width: "100%",
-            height: 70,
-            marginVertical: 10,
-            backgroundColor: Colors.general.primary,
-          }}
-          text_style={{ color: "white" }}
-        />
-      </View>
-    </AuthBackground>
+      </AuthBackground>
+      <Button title="Open Bottom Sheet" onPress={handleOpenSheet} />
+      <Button title="Close Bottom Sheet" onPress={closeBottomSheet} />
+    </View>
   );
 };
 

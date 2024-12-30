@@ -1,6 +1,7 @@
 import React, {ReactNode} from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
-import {Colors} from '../../theme';
+import { Colors } from '../../constants/colors';
+
 
 interface PrimaryViewProps {
   children?: ReactNode;

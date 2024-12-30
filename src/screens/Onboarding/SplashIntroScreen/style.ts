@@ -26,7 +26,7 @@ const splashIntroStyles = StyleSheet.create({
   text1: {
     fontSize: 40,
     color: "white",
-    fontFamily: "Outfit-Bold",
+    fontFamily: "Outfit Bold",
     textAlign: "center",
   },
   bottomTextCover: {
@@ -36,7 +36,7 @@ const splashIntroStyles = StyleSheet.create({
   bottomText: {
     fontSize: 24,
     color: Colors.general.white,
-    fontFamily: "Outfit-Light",
+    fontFamily: "Outfit Light",
     textAlign: "center",
   },
   btnCover: {

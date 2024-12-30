@@ -38,6 +38,11 @@ const verifyStyle = StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: 20,
   },
+  contentContainer: {
+    flex: 1,
+    padding: 36,
+    alignItems: 'center',
+  },
 });
 
 export default verifyStyle;
