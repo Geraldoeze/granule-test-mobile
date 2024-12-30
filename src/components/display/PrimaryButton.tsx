@@ -6,7 +6,7 @@ interface PrimaryButtonProps {
   button_title: string;
   disabled?: boolean;
   text_style?: TextStyle;
-  container_style?: ViewStyle;
+  container_style?: ViewStyle ; 
 }
 
 const PrimaryButton: React.FC<PrimaryButtonProps> = ({
@@ -22,7 +22,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
         <Text
           style={[
             {
-              fontSize: 16,
+              fontSize: 18,
               fontFamily: 'Outfit Bold',
             },
             text_style,
