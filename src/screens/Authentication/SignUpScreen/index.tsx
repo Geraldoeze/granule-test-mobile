@@ -91,8 +91,7 @@ const SignUpScreen = () => {
           button_title={"Continue"}
           container_style={{
             borderRadius: 20,
-            width: "100%",
-            height: 70,
+          
             marginVertical: 30,
             backgroundColor: Colors.general.primary,
           }}

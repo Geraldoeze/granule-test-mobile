@@ -46,7 +46,7 @@ const screenOptions = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const OnboardingStack = () => {
+const AuthenticationStack = () => {
   return (
     <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen name="SplashIntroScreen" component={SplashScreen} />
@@ -64,4 +64,4 @@ const OnboardingStack = () => {
   );
 };
 
-export default OnboardingStack;
+export default AuthenticationStack;

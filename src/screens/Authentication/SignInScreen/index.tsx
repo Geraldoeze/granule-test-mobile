@@ -53,8 +53,7 @@ const SignInScreen = () => {
           button_title={"Login"}
           container_style={{
             borderRadius: 20,
-            width: "100%",
-            height: 70,
+          
             marginVertical: 30,
             backgroundColor: Colors.general.primary,
           }}

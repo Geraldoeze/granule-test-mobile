@@ -3,10 +3,12 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 // screen
-import OnboardingStack from "./OnboardingStack";
+import AuthenticationStack from "./AuthenticationStack";
 
 // ui
 import SplashLoading from "../components/display/SplashLoading";
+import Toastable from "react-native-toastable";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export type RootStackParamList = {
   SignInScreen: undefined;
@@ -27,6 +29,7 @@ export function useAppNavigation() {
 
 const MainStack = () => {
   const [isSplashVisible, setIsSplashVisible] = useState(true);
+  const { top } = useSafeAreaInsets();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -36,7 +39,22 @@ const MainStack = () => {
     return () => clearTimeout(timer); // Cleanup the timer on component unmount
   }, []);
 
-  return isSplashVisible ? <SplashLoading /> : <OnboardingStack />;
+  return isSplashVisible ? (
+    <SplashLoading />
+  ) : (
+    <>
+      <AuthenticationStack />
+      <Toastable
+        statusMap={{
+          success: "green",
+          danger: "red",
+          warning: "yellow",
+          info: "blue",
+        }}
+        offset={top}
+      />
+    </>
+  );
 };
 
 export default MainStack;

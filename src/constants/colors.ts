@@ -33,9 +33,10 @@ export const Colors = {
     secondary: "#17314B",
     dark: "#373737",
     input_color: "#4A4A68",
+    background: "#F7F7FC",
   },
   dark: {
-    light_background: "#F9F6FB",
+    light_background: "#000000",
     light_bg: "#A7A7A71A",
     auth_text1: "#1A0E2C",
     auth_text2: "#8C8CA1",
@@ -44,6 +45,7 @@ export const Colors = {
     secondary: "#17314B",
     dark: "#373737",
     input_color: "#4A4A68",
+    background: "#F7F7FC",
   },
 };
 

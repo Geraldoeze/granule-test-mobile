@@ -18,7 +18,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
 }) => {
   return (
     <Pressable onPress={onPress} disabled={disabled}>
-      <View style={[styles.touchableButtonContainer, container_style]}>
+      <View style={[styles.btnContainer, container_style]}>
         <Text
           style={[
             {
@@ -37,7 +37,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({
 export default PrimaryButton;
 
 const styles = StyleSheet.create({
-  touchableButtonContainer: {
+  btnContainer: {
     height: 60,
     width: '100%',
     borderRadius: 10,

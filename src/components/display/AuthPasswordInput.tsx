@@ -11,7 +11,7 @@ const AuthPasswordInput = ({ label }: AuthPasswordInput) => {
   const theme = useTheme();
   const [show_password, setShow_password] = useState(false);
   return (
-    <View style={styles.inputCover}>
+    <View style={styles.inputCover} testID="input-container">
       <Text style={[styles.text, { color: theme.primary }]}>{label}</Text>
       <TextInput
         variant="standard"
@@ -34,6 +34,9 @@ const AuthPasswordInput = ({ label }: AuthPasswordInput) => {
               />
             )}
             onPress={() => setShow_password((prev) => !prev)}
+            testID={`password-visibility-icon-${
+              show_password ? "visible" : "hidden"
+            }`}
           />
         }
       />

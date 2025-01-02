@@ -8,6 +8,7 @@ const AuthBackground = ({ children }: { children: React.ReactNode }) => {
   return (
     <View
       style={[styles.container, { backgroundColor: theme.light_background }]}
+      testID="container"
     >
       <SafeAreaView>{children}</SafeAreaView>
     </View>

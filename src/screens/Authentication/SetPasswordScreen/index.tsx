@@ -33,8 +33,7 @@ const SetPasswordScreeen = () => {
           button_title={"Reset Password"}
           container_style={{
             borderRadius: 20,
-            width: "100%",
-            height: 70,
+           
             marginVertical: 10,
             backgroundColor: Colors.general.primary,
           }}

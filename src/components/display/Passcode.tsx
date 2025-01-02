@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: 47,
-    height: 65,
+    height: 55,
     marginHorizontal: 2,
     borderRadius: 2,
     justifyContent: "center",

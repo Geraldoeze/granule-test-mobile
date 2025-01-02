@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { Button, Pressable, Text, View } from "react-native";
+import { Animated, Button, Pressable, Text, View } from "react-native";
 import { Colors, useTheme } from "../../../constants/colors";
 import { TextInput } from "@react-native-material/core";
 import PrimaryButton from "../../../components/display/PrimaryButton";
@@ -17,9 +17,7 @@ import {
 } from "../../../navigation/MainStack";
 import AuthBackBtn from "../../../components/display/AuthBackBtn";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
+import Icon from "react-native-vector-icons/Octicons";
 import { useBottomSheet } from "../../../hooks/BottomSheetProvider";
 
 type VerifyScreenProps = NativeStackScreenProps<
@@ -30,21 +28,39 @@ type VerifyScreenProps = NativeStackScreenProps<
 const VerifyScreen: React.FC<VerifyScreenProps> = ({ route }) => {
   const { previous_screen } = route.params;
   const { openBottomSheet, closeBottomSheet } = useBottomSheet();
+  const [visible, setVisible] = useState(false);
+  const animation = useRef(new Animated.Value(200)).current; // Start off-screen (200px below)
+
+  const showToast = () => {
+    setVisible(true);
+    Animated.timing(animation, {
+      toValue: 0, // Move to screen bottom
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const hideToast = () => {
+    Animated.timing(animation, {
+      toValue: 200, // Move off-screen
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => setVisible(false)); // Set visibility to false after animation
+  };
 
   const navigation = useAppNavigation();
   const theme = useTheme();
 
-  const handleOpenSheet = () => {
-    openBottomSheet(
-      <View style={styles.content}>
-        <Button title="Close Bottom Sheet" onPress={closeBottomSheet} />
-      </View>,
-      ["50%", "75%"] // Optional custom snap points
-    );
-  };
+  // const handleOpenSheet = () => {
+  //   openBottomSheet(
+  //     <OtpVerified />,
+  //     ["20%", "20%"] // Optional custom snap points
+  //   );
+  // };
 
   const handle_navigation = () => {
     if (previous_screen === "SignInScreen") {
+      showToast();
     }
     if (previous_screen === "SignUpScreen") {
       navigation.navigate("SetPasscodeScreen");
@@ -131,8 +147,7 @@ const VerifyScreen: React.FC<VerifyScreenProps> = ({ route }) => {
             button_title={"Verify"}
             container_style={{
               borderRadius: 20,
-              width: "100%",
-              height: 70,
+             
               marginVertical: 10,
               backgroundColor: Colors.general.primary,
             }}
@@ -140,12 +155,53 @@ const VerifyScreen: React.FC<VerifyScreenProps> = ({ route }) => {
           />
         </View>
       </AuthBackground>
-      <Button title="Open Bottom Sheet" onPress={handleOpenSheet} />
-      <Button title="Close Bottom Sheet" onPress={closeBottomSheet} />
+
+      {visible && (
+        <Animated.View
+          style={[
+            styles.toastContainer,
+            { transform: [{ translateY: animation }] },
+          ]}
+        >
+          <OtpVerified close_handler={hideToast} />
+        </Animated.View>
+      )}
     </View>
   );
 };
 
+const OtpVerified = ({ close_handler }: { close_handler: () => void }) => {
+  const theme = useTheme();
+  const navigation = useAppNavigation();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      close_handler();
+      // anotherFunction();
+    }, 4000);
+
+    // Cleanup the timeout when the component unmounts
+    return () => clearTimeout(timer);
+  }, [close_handler]);
+  return (
+    <View
+      style={[
+        styles.otpCover,
+    
+      ]}
+    >
+      <Icon name="check-circle-fill" size={60} color="#31D0AA" />
+      <View style={{}}>
+        <Text style={[styles.text5, { color: theme.auth_text1 }]}>
+          OTP Verified
+        </Text>
+        <Text style={[styles.text6, { color: theme.dark }]}>
+          Successful Verification!
+        </Text>
+      </View>
+    </View>
+  );
+};
 export default VerifyScreen;
 
 // const styles = StyleSheet.create({
