@@ -1,22 +1,25 @@
-import React, { useEffect, useRef, useState } from "react";
-import {
-  Animated,
-  Dimensions,
-  KeyboardAvoidingView,
-  Platform,
-  Pressable,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+// React & React Native Imports
+import React, { useRef, useState } from "react";
+import { Animated, Dimensions, Text, View } from "react-native";
+
+// Third-party Libraries
+import Icon from "react-native-vector-icons/Octicons";
+
+// Project Constants
 import { Colors, useTheme } from "../../../constants/colors";
+
+// Components
 import PrimaryButton from "../../../components/display/PrimaryButton";
 import AuthBackground from "../../../components/display/AuthBackground";
-import styles from "./style";
 import { useAppNavigation } from "../../../navigation/MainStack";
 import AuthBackBtn from "../../../components/display/AuthBackBtn";
 import Passcode from "../../../components/display/Passcode";
-import Icon from "react-native-vector-icons/Octicons";
+
+// Styles
+import styles from "./style";
+
+// Functions
+import useSetPasscode from "./useSetPasscode";
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
 const MODAL_HEIGHT = SCREEN_HEIGHT * 0.4;
@@ -27,28 +30,10 @@ const SetPasscodeScreeen = () => {
   const [visible, setVisible] = useState(false);
   const slideAnim = useRef(new Animated.Value(MODAL_HEIGHT)).current;
 
-  // Show toast with animation
-
-  const showToast = () => {
-    setVisible(true);
-    Animated.spring(slideAnim, {
-      toValue: 0,
-      useNativeDriver: true,
-      bounciness: 8,
-      speed: 12,
-    }).start();
-  };
-
-  const hideToast = () => {
-    Animated.timing(slideAnim, {
-      toValue: MODAL_HEIGHT,
-      duration: 500,
-      useNativeDriver: true,
-    }).start(() => setVisible(false));
-  };
+  const { showToast, hideToast } = useSetPasscode();
 
   const handle_confirm = () => {
-    showToast();
+    showToast(setVisible, slideAnim);
   };
 
   return (
@@ -70,8 +55,7 @@ const SetPasscodeScreeen = () => {
             onPress={handle_confirm}
             button_title={"Confirm"}
             container_style={{
-              borderRadius: 20,
-
+              borderRadius: 16,
               marginVertical: 20,
               backgroundColor: Colors.general.primary,
             }}
@@ -87,7 +71,9 @@ const SetPasscodeScreeen = () => {
               },
             ]}
           >
-            <ProfileCreated close_handler={hideToast} />
+            <ProfileCreated
+              close_handler={() => hideToast(setVisible, slideAnim)}
+            />
           </Animated.View>
         )}
       </View>
@@ -99,6 +85,10 @@ const ProfileCreated = ({ close_handler }: { close_handler: () => void }) => {
   const theme = useTheme();
   const navigation = useAppNavigation();
 
+  const handleNavigation = () => {
+    close_handler();
+    navigation.navigate("InformationScreen");
+  };
   return (
     <View
       style={[
@@ -119,13 +109,11 @@ const ProfileCreated = ({ close_handler }: { close_handler: () => void }) => {
       </View>
       <View style={{ width: "100%" }}>
         <PrimaryButton
-          onPress={close_handler}
+          onPress={handleNavigation}
           button_title={"Proceed"}
           container_style={{
-            borderRadius: 20,
-            width: "100%",
-            height: 70,
-            marginVertical: 20,
+            borderRadius: 16,
+            marginVertical: 10,
             backgroundColor: Colors.general.primary,
           }}
           text_style={{ color: "white" }}

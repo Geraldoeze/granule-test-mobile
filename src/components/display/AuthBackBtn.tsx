@@ -28,7 +28,7 @@ const AuthBackBtn = ({ onpress }: AuthBackBtn) => {
           borderRadius: 35,
         }}
       >
-        <Icon name="keyboard-arrow-left" size={20} color="black" testID="icon" />
+        <Icon name="keyboard-arrow-left" size={20} color="#373737" testID="icon" />
         <Text
           style={{
             fontFamily: "Outfit Medium",

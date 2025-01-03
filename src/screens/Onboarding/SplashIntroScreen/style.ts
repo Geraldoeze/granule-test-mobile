@@ -42,12 +42,12 @@ const splashIntroStyles = StyleSheet.create({
   btnCover: {
     flexDirection: "row",
     justifyContent: "center",
-    gap: 10,
+    gap: 16,
     marginTop: 20,
   },
   containerStyles1: {
     backgroundColor: "#FFFFFF40",
-    borderRadius: 20,
+    borderRadius: 16,
     width: 145,
     height: 60,
   },
@@ -56,7 +56,7 @@ const splashIntroStyles = StyleSheet.create({
   },
   containerStyles2: {
     backgroundColor: Colors.general.white,
-    borderRadius: 20,
+    borderRadius: 16,
     width: 145,
     height: 60,
   },

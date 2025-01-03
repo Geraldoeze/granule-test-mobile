@@ -21,6 +21,8 @@ export type RootStackParamList = {
   };
   SetPasscodeScreen: undefined;
   SetPasswordScreen: undefined;
+  InformationScreen: undefined;
+  EnableBiometricsScreen: undefined;
 };
 
 export function useAppNavigation() {

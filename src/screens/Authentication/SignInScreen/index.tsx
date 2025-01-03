@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import {
-  Image,
-  Pressable,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+// React and React Native imports
+import React from "react";
+import { Image, Pressable, Text, View } from "react-native";
+import { TextInput } from "@react-native-material/core";
+
+// Project constants
 import { Colors, useTheme } from "../../../constants/colors";
-import { TextInput, IconButton } from "@react-native-material/core";
+
+// Project components
 import PrimaryButton from "../../../components/display/PrimaryButton";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import AuthBackground from "../../../components/display/AuthBackground";
-import styles from "./style";
 import { useAppNavigation } from "../../../navigation/MainStack";
 import AuthPasswordInput from "../../../components/display/AuthPasswordInput";
+
+// Styles
+import styles from "./style";
+
 
 const SignInScreen = () => {
   const theme = useTheme();
@@ -52,8 +52,7 @@ const SignInScreen = () => {
           }
           button_title={"Login"}
           container_style={{
-            borderRadius: 20,
-          
+            borderRadius: 16,
             marginVertical: 30,
             backgroundColor: Colors.general.primary,
           }}

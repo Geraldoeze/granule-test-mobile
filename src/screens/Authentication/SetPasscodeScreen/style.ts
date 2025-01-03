@@ -5,7 +5,7 @@ const setPasscodeStyle = StyleSheet.create({
     height: "100%",
     position: "relative",
   },
-  backCover: { marginVertical: 20, paddingHorizontal: 20 },
+  backCover: { marginVertical: 10, paddingHorizontal: 20 },
 
   content: { paddingHorizontal: 20 },
 
@@ -33,14 +33,14 @@ const setPasscodeStyle = StyleSheet.create({
   text5: {
     fontFamily: "Outfit Bold",
     fontSize: 24,
-    marginVertical: 20,
+    marginVertical: 10,
     textAlign: "center",
   },
   text6: {
     fontFamily: "Outfit Regular",
     fontSize: 24,
     textAlign: "center",
-    marginVertical: 10,
+    marginVertical: 6,
   },
   inputCover: {
     marginVertical: 30,

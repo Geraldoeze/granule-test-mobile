@@ -1,26 +1,26 @@
-import React, { useState } from "react";
-import {
-  Image,
-  Linking,
-  Pressable,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { Colors } from "../../../constants/colors";
-import { TextInput, IconButton } from "@react-native-material/core";
-import PrimaryButton from "../../../components/display/PrimaryButton";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import AuthBackground from "../../../components/display/AuthBackground";
-import styles from "./style";
+// React and React Native imports
+import React from "react";
+import { Linking, Text, View } from "react-native";
+import { IconButton, TextInput } from "@react-native-material/core";
 
-import { useAppNavigation } from "../../../navigation/MainStack";
+// Third-party libraries
+import Ionicons from "react-native-vector-icons/Ionicons";
+
+// Project constants
+import { Colors, useTheme } from "../../../constants/colors";
+
+// Project components
+import PrimaryButton from "../../../components/display/PrimaryButton";
+import AuthBackground from "../../../components/display/AuthBackground";
 import AuthBackBtn from "../../../components/display/AuthBackBtn";
+import { useAppNavigation } from "../../../navigation/MainStack";
+
+// Styles
+import styles from "./style";
 
 const SignUpScreen = () => {
   const navigation = useAppNavigation();
+  const theme = useTheme();
 
   const handleTermsPress = () => {
     Linking.openURL("https://granule.com/terms");
@@ -35,10 +35,10 @@ const SignUpScreen = () => {
       <AuthBackBtn onpress={() => navigation.navigate("SignInScreen")} />
 
       <View style={styles.backCover}>
-        <Text style={[styles.text, { color: Colors.light.auth_text1 }]}>
+        <Text style={[styles.text, { color: theme.auth_text1 }]}>
           Enter your email
         </Text>
-        <Text style={[styles.text1, { color: Colors.light.auth_text2 }]}>
+        <Text style={[styles.text1, { color: theme.auth_text2 }]}>
           enter the email you want to use for this account.
         </Text>
         <View style={styles.inputCover}>
@@ -83,15 +83,14 @@ const SignUpScreen = () => {
           Referral Code
         </Text>
         <PrimaryButton
-           onPress={() =>
+          onPress={() =>
             navigation.navigate("VerifyScreen", {
               previous_screen: "SignUpScreen",
             })
           }
           button_title={"Continue"}
           container_style={{
-            borderRadius: 20,
-          
+            borderRadius: 16,
             marginVertical: 30,
             backgroundColor: Colors.general.primary,
           }}
@@ -101,7 +100,7 @@ const SignUpScreen = () => {
           <Text
             style={[
               styles.text4,
-              { lineHeight: 20, fontSize: 14, color: Colors.light.auth_text2 },
+              { lineHeight: 20, fontSize: 14, color: theme.auth_text2 },
             ]}
           >
             {" "}

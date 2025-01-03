@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const forgotPasswordStyle = StyleSheet.create({
+const informationStyle = StyleSheet.create({
   backCover: { marginVertical: 10, paddingHorizontal: 20 },
 
   content: { paddingHorizontal: 20 },
@@ -35,4 +35,4 @@ const forgotPasswordStyle = StyleSheet.create({
   },
 });
 
-export default forgotPasswordStyle;
+export default informationStyle;

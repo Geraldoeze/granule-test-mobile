@@ -1,24 +1,29 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { Animated, Button, Pressable, Text, View } from "react-native";
+// React and React Native imports
+import React, { useEffect, useRef, useState } from "react";
+import { Animated, Linking, Pressable, Text, View } from "react-native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { IconButton, TextInput } from "@react-native-material/core";
+
+// Third-party libraries
+import Icon from "react-native-vector-icons/Octicons";
+
+// Project constants
 import { Colors, useTheme } from "../../../constants/colors";
-import { TextInput } from "@react-native-material/core";
+
+// Project components
 import PrimaryButton from "../../../components/display/PrimaryButton";
 import AuthBackground from "../../../components/display/AuthBackground";
-import styles from "./style";
+import AuthBackBtn from "../../../components/display/AuthBackBtn";
 import {
   RootStackParamList,
   useAppNavigation,
 } from "../../../navigation/MainStack";
-import AuthBackBtn from "../../../components/display/AuthBackBtn";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import Icon from "react-native-vector-icons/Octicons";
-import { useBottomSheet } from "../../../hooks/BottomSheetProvider";
+
+// Styles
+import styles from "./style";
+
+// Function
+import useVerify from "./useVerify";
 
 type VerifyScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -27,69 +32,24 @@ type VerifyScreenProps = NativeStackScreenProps<
 
 const VerifyScreen: React.FC<VerifyScreenProps> = ({ route }) => {
   const { previous_screen } = route.params;
-  const { openBottomSheet, closeBottomSheet } = useBottomSheet();
   const [visible, setVisible] = useState(false);
   const animation = useRef(new Animated.Value(200)).current; // Start off-screen (200px below)
-
-  const showToast = () => {
-    setVisible(true);
-    Animated.timing(animation, {
-      toValue: 0, // Move to screen bottom
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const hideToast = () => {
-    Animated.timing(animation, {
-      toValue: 200, // Move off-screen
-      duration: 300,
-      useNativeDriver: true,
-    }).start(() => setVisible(false)); // Set visibility to false after animation
-  };
-
   const navigation = useAppNavigation();
   const theme = useTheme();
-
-  // const handleOpenSheet = () => {
-  //   openBottomSheet(
-  //     <OtpVerified />,
-  //     ["20%", "20%"] // Optional custom snap points
-  //   );
-  // };
-
-  const handle_navigation = () => {
-    if (previous_screen === "SignInScreen") {
-      showToast();
-    }
-    if (previous_screen === "SignUpScreen") {
-      navigation.navigate("SetPasscodeScreen");
-    }
-    if (previous_screen === "ForgotPasswordScreen") {
-      navigation.navigate("SetPasswordScreen");
-    }
-  };
-
   const [input_value, setInput_value] = useState("");
+  const { formatInput, hideToast, showToast, handleNavigation } = useVerify();
 
-  // Format the input by adding dashes after each digit
-  const formatInput = (value: string) => {
-    // Remove all non-digit characters
-    const digitsOnly = value.replace(/\D/g, "");
-    // Add dashes after every digit, but limit to 4 digits
-    return digitsOnly.split("").slice(0, 6e4).join("-");
-  };
-
-  // Handle text change
   const handleInputChange = (value: string) => {
     const formatted = formatInput(value);
     setInput_value(formatted);
   };
 
-  // Handle paste (not directly applicable in React Native)
-  const handlePaste = (event: any) => {
-    // React Native doesn't have `onPaste` directly, but you can handle this if using a library like `react-native-clipboard`
-    // Or process pasted text using other inputs
+  const closeToast = () => {
+    hideToast(animation, () => setVisible(false));
+  };
+
+  const handleNavigationClick = () => {
+    handleNavigation(previous_screen, navigation, animation, setVisible);
   };
 
   return (
@@ -143,11 +103,10 @@ const VerifyScreen: React.FC<VerifyScreenProps> = ({ route }) => {
             </Pressable>
           </View>
           <PrimaryButton
-            onPress={handle_navigation}
+            onPress={handleNavigationClick}
             button_title={"Verify"}
             container_style={{
-              borderRadius: 20,
-             
+              borderRadius: 16,
               marginVertical: 10,
               backgroundColor: Colors.general.primary,
             }}
@@ -163,7 +122,7 @@ const VerifyScreen: React.FC<VerifyScreenProps> = ({ route }) => {
             { transform: [{ translateY: animation }] },
           ]}
         >
-          <OtpVerified close_handler={hideToast} />
+          <OtpVerified close_handler={closeToast} />
         </Animated.View>
       )}
     </View>
@@ -184,12 +143,7 @@ const OtpVerified = ({ close_handler }: { close_handler: () => void }) => {
     return () => clearTimeout(timer);
   }, [close_handler]);
   return (
-    <View
-      style={[
-        styles.otpCover,
-    
-      ]}
-    >
+    <View style={[styles.otpCover]}>
       <Icon name="check-circle-fill" size={60} color="#31D0AA" />
       <View style={{}}>
         <Text style={[styles.text5, { color: theme.auth_text1 }]}>

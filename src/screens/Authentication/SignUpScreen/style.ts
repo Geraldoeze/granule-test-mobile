@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 const signUpStyle = StyleSheet.create({
-  backCover: { marginVertical: 20, paddingHorizontal: 20 },
+  backCover: { marginVertical: 10, paddingHorizontal: 20 },
 
   content: { paddingHorizontal: 20 },
 
@@ -9,7 +9,7 @@ const signUpStyle = StyleSheet.create({
   text1: {
     fontSize: 18,
     fontFamily: "Outfit Regular",
-    marginBottom: 10
+    marginBottom: 10,
   },
   text2: {
     fontSize: 16,

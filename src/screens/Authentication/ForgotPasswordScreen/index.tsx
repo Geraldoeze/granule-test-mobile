@@ -1,13 +1,22 @@
+// React and React Native imports
 import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
-import { Colors } from "../../../constants/colors";
+
+// Third-party libraries
 import { TextInput, IconButton } from "@react-native-material/core";
-import PrimaryButton from "../../../components/display/PrimaryButton";
 import Ionicons from "react-native-vector-icons/Ionicons";
+
+// Project constants
+import { Colors } from "../../../constants/colors";
+
+// Project components
+import PrimaryButton from "../../../components/display/PrimaryButton";
 import AuthBackground from "../../../components/display/AuthBackground";
-import styles from "./style";
 import { useAppNavigation } from "../../../navigation/MainStack";
 import AuthBackBtn from "../../../components/display/AuthBackBtn";
+
+// Styles
+import styles from "./style";
 
 const ForgotPasswordScreen = () => {
   const navigation = useAppNavigation();
@@ -54,16 +63,14 @@ const ForgotPasswordScreen = () => {
         </View>
 
         <PrimaryButton
-           onPress={() =>
+          onPress={() =>
             navigation.navigate("VerifyScreen", {
               previous_screen: "ForgotPasswordScreen",
             })
           }
           button_title={"Continue"}
           container_style={{
-            borderRadius: 20,
-            width: "100%",
-            height: 70,
+            borderRadius: 16,
             marginVertical: 10,
             backgroundColor: Colors.general.primary,
           }}
