@@ -1,3 +1,8 @@
 {
+  "compilerOptions": {},
+  "include": [
+    "src",
+    "declarations.d.ts" // or whatever path you put the file in
+  ],
   "extends": "@react-native/typescript-config/tsconfig.json"
 }

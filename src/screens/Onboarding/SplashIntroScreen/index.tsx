@@ -4,6 +4,7 @@ import { View, Image, Text, SafeAreaView } from "react-native";
 import PrimaryView from "../../../components/display/PrimaryView";
 import PrimaryButton from "../../../components/display/PrimaryButton";
 import { useAppNavigation } from "../../../navigation/MainStack";
+import Logo from "../../../../assets/icons/icon-sm.svg";
 
 const SplashIntroScreen = ({}) => {
   const navigation = useAppNavigation();
@@ -20,10 +21,7 @@ const SplashIntroScreen = ({}) => {
         <View style={styles.container}>
           <View style={styles.content}>
             <View style={{ alignItems: "center" }}>
-              <Image
-                source={require("../../../../assets/icons/logo.png")}
-                style={styles.logoStyle}
-              />
+              <Logo style={styles.logoStyle} />
             </View>
             <Text style={styles.text1}>Flexibility with ease</Text>
           </View>
