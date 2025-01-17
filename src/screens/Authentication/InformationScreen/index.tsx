@@ -4,7 +4,6 @@ import { Pressable, Text, View } from "react-native";
 
 // Third-party libraries
 import { TextInput, IconButton } from "@react-native-material/core";
-import Ionicons from "react-native-vector-icons/Ionicons";
 
 // Project constants
 import { Colors } from "../../../constants/colors";
@@ -28,7 +27,7 @@ const InformationScreen = () => {
   };
   return (
     <AuthBackground>
-      <AuthBackBtn onpress={() => navigation.navigate("SignInScreen")} />
+      <AuthBackBtn onpress={() => navigation.goBack()} />
 
       <View style={styles.backCover}>
         <Text style={[styles.text, { color: Colors.light.auth_text1 }]}>
@@ -75,7 +74,7 @@ const InformationScreen = () => {
             style={[
               styles.text2,
               {
-                color: Colors.general.primary,
+                color: Colors.general.label,
               },
             ]}
           >
@@ -87,15 +86,27 @@ const InformationScreen = () => {
             placeholderTextColor={"#4A4A684C"}
             keyboardType="number-pad"
             inputStyle={{
-              fontFamily: "Outfit Regular",
-              fontSize: 22,
+              fontFamily: "Outfit Medium",
+              fontSize: 20,
             }}
             color={Colors.general.primary}
           />
+          <Text
+            style={[
+              styles.text3,
+              {
+                color: Colors.light.primary,
+              },
+            ]}
+          >
+            {information === "BVN"
+              ? "Forgot BVN? Click here"
+              : "Forgot NIN? Click here"}
+          </Text>
         </View>
 
         <PrimaryButton
-          onPress={() => navigation.navigate("EnableBiometricsScreen")}
+          onPress={() => navigation.navigate("VerifyInformation")}
           button_title={"Next"}
           container_style={{
             borderRadius: 16,
@@ -110,4 +121,3 @@ const InformationScreen = () => {
 };
 
 export default InformationScreen;
-

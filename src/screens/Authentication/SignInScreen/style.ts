@@ -11,6 +11,10 @@ const signInStyle = StyleSheet.create({
   inputCover: {
     marginVertical: 10,
   },
+  inputStyle:{
+    fontFamily: 'Outfit Medium',
+    fontSize: 18,
+  },
   text: {
     fontSize: 16,
     fontFamily: "Outfit Medium",

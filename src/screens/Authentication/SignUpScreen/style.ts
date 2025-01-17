@@ -27,7 +27,11 @@ const signUpStyle = StyleSheet.create({
     fontFamily: "Outfit Regular",
   },
   inputCover: {
-    marginVertical: 30,
+    marginVertical: 15,
+  },
+  inputStyle: {
+    fontFamily: "Outfit Medium",
+    fontSize: 18,
   },
   bottomTextCover: {
     flexDirection: "row",

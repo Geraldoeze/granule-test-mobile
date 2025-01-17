@@ -60,15 +60,7 @@ export const BottomSheetProvider: React.FC<BottomSheetProviderProps> = ({
   return (
     <BottomSheetContext.Provider value={{ openBottomSheet, closeBottomSheet }}>
       {children}
-      {/* <BottomSheet
-        ref={bottomSheetRef}
-        index={-1}
-        snapPoints={snapPoints}
-        style={styles.bottomSheet}
-        backgroundStyle={styles.bottomSheetBackground}
-      >
-        {content}
-      </BottomSheet> */}
+     
       <BottomSheet
         ref={bottomSheetRef}
         snapPoints={["25%", "50%", "90%"]}

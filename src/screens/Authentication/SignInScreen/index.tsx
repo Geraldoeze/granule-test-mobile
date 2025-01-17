@@ -1,5 +1,5 @@
 // React and React Native imports
-import React from "react";
+import React, { useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import { TextInput } from "@react-native-material/core";
 
@@ -11,21 +11,42 @@ import PrimaryButton from "../../../components/display/PrimaryButton";
 import AuthBackground from "../../../components/display/AuthBackground";
 import { useAppNavigation } from "../../../navigation/MainStack";
 import AuthPasswordInput from "../../../components/display/AuthPasswordInput";
+import BrandLogo from "../../../../assets/icons/brand-logo.svg";
 
 // Styles
 import styles from "./style";
 
+//
+import useSignIn from "./useSignIn";
+import { showFlashMessage } from "../../../utils/flash-message";
+import { ActivityIndicator } from "react-native";
 
 const SignInScreen = () => {
   const theme = useTheme();
   const navigation = useAppNavigation();
+
+  const { mutation } = useSignIn();
+  const [auth, setAuth] = useState({
+    email: "",
+    passcode: "",
+  });
+
+  const handleLogin = () => {
+    if (!auth.email || !auth.passcode) {
+      showFlashMessage({
+        message: "Error",
+        description: "Please enter your email and password",
+        type: "danger",
+      });
+      return;
+    }
+    // mutation.mutate(auth);
+    navigation.navigate("VerifyInformation")
+  };
   return (
     <AuthBackground>
       <View style={styles.logoCover}>
-        <Image
-          source={require("../../../../assets/icons/logo-colored.png")}
-          style={styles.logoStyles}
-        />
+        <BrandLogo />
       </View>
 
       <View style={styles.content}>
@@ -34,22 +55,26 @@ const SignInScreen = () => {
           <TextInput
             variant="standard"
             label=""
+            value={auth.email}
+            onChangeText={(email) => setAuth((prev) => ({ ...prev, email }))}
             color={Colors.general.primary}
-            style={{}}
+            inputStyle={styles.inputStyle}
           />
         </View>
-        <AuthPasswordInput label="Password" />
+        <AuthPasswordInput
+          value={auth.passcode}
+          onChangeText={(passcode) =>
+            setAuth((prev) => ({ ...prev, passcode }))
+          }
+          label="Password"
+        />
         <Pressable onPress={() => navigation.navigate("ForgotPasswordScreen")}>
           <Text style={[styles.text1, { color: theme.dark }]}>
             Forgot your Passcode?
           </Text>
         </Pressable>
         <PrimaryButton
-          onPress={() =>
-            navigation.navigate("VerifyScreen", {
-              previous_screen: "SignInScreen",
-            })
-          }
+          onPress={handleLogin}
           button_title={"Login"}
           container_style={{
             borderRadius: 16,
@@ -58,6 +83,13 @@ const SignInScreen = () => {
           }}
           text_style={{ color: "white" }}
         />
+        {mutation.isPending && (
+          <ActivityIndicator
+            style={{ marginBottom: 10, alignSelf: "center" }}
+            color={Colors.general.primary}
+            size="small"
+          />
+        )}
         <View style={styles.bottomTextCover}>
           <Text
             style={[

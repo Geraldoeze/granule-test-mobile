@@ -1,6 +1,13 @@
 // React & React Native Imports
 import React, { useRef, useState } from "react";
-import { Animated, Dimensions, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Animated,
+  Dimensions,
+  Keyboard,
+  Text,
+  View,
+} from "react-native";
 
 // Third-party Libraries
 import Icon from "react-native-vector-icons/Octicons";
@@ -20,6 +27,9 @@ import styles from "./style";
 
 // Functions
 import useSetPasscode from "./useSetPasscode";
+import { useSelector } from "react-redux";
+import { selectAuthenticatData } from "../../../store/signup/selectors";
+import { showFlashMessage } from "../../../utils/flash-message";
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
 const MODAL_HEIGHT = SCREEN_HEIGHT * 0.4;
@@ -29,11 +39,44 @@ const SetPasscodeScreeen = () => {
   const theme = useTheme();
   const [visible, setVisible] = useState(false);
   const slideAnim = useRef(new Animated.Value(MODAL_HEIGHT)).current;
+  const [pin, setPin] = useState({
+    passcode: "",
+    reEnteredPasscode: "",
+  });
+  const authenticatData = useSelector(selectAuthenticatData);
 
-  const { showToast, hideToast } = useSetPasscode();
+  const { showToast, hideToast, mutation } = useSetPasscode();
 
   const handle_confirm = () => {
-    showToast(setVisible, slideAnim);
+    console.log(pin);
+    if (pin.passcode !== pin.reEnteredPasscode) {
+      showFlashMessage({
+        message: "Error",
+        description: "Passcodes do not match",
+        type: "danger",
+      });
+      return;
+    }
+    mutation.mutate(
+      {
+        email: authenticatData.email,
+        passcode: pin.passcode,
+      },
+      {
+        onSuccess: (data) => {
+          if (data.status === 201) {
+            showToast(setVisible, slideAnim);
+          }
+        },
+      }
+    );
+  };
+
+  const handlePasscode = (code: string) => {
+    setPin({ ...pin, passcode: code });
+  };
+  const handleReEnteredPasscode = (code: string) => {
+    setPin({ ...pin, reEnteredPasscode: code });
   };
 
   return (
@@ -48,8 +91,11 @@ const SetPasscodeScreeen = () => {
           <Text style={[styles.text1, { color: theme.auth_text2 }]}>
             Enter a 6 digit passcode
           </Text>
-          <Passcode onPinComplete={() => {}} label="Set passcode" />
-          <Passcode onPinComplete={() => {}} label="Re-Enter passcode" />
+          <Passcode onPinComplete={handlePasscode} label="Set passcode" />
+          <Passcode
+            onPinComplete={handleReEnteredPasscode}
+            label="Re-Enter passcode"
+          />
 
           <PrimaryButton
             onPress={handle_confirm}
@@ -61,6 +107,13 @@ const SetPasscodeScreeen = () => {
             }}
             text_style={{ color: "white" }}
           />
+          {mutation.isPending && (
+            <ActivityIndicator
+              style={{ marginBottom: 10, alignSelf: "center" }}
+              color={Colors.general.primary}
+              size="small"
+            />
+          )}
         </View>
         {visible && (
           <Animated.View

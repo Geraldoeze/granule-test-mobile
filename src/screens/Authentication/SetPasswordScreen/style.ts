@@ -13,7 +13,7 @@ const setPasswordStyle = StyleSheet.create({
   text1: {
     fontSize: 18,
     fontFamily: "Outfit Regular",
-    marginBottom: 10
+    marginBottom: 10,
   },
   text2: {
     fontSize: 16,
@@ -43,7 +43,7 @@ const setPasswordStyle = StyleSheet.create({
     marginVertical: 6,
   },
   inputCover: {
-    marginVertical: 30,
+    marginVertical: 20,
   },
   bottomTextCover: {
     flexDirection: "row",

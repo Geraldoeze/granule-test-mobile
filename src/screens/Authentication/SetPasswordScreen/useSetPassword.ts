@@ -1,4 +1,9 @@
 import { Animated } from "react-native";
+import { showFlashMessage } from "../../../utils/flash-message";
+import { useMutation } from "@tanstack/react-query";
+import { apiResetPassword } from "../../../api/authentication";
+import { ResetPasscodeProps } from "../../../interface/authenticattion";
+import { getFirstErrorMessage } from "../../../utils/sub-functions";
 
 const MODAL_HEIGHT = 400; // Example value
 
@@ -24,9 +29,45 @@ const useSetPassword = () => {
     }).start(() => setVisible(false));
   };
 
+  const mutation = useMutation({
+    mutationFn: (values: ResetPasscodeProps) => apiResetPassword(values),
+    onSuccess: (data) => {
+      if (data?.status === "error") {
+        if ("msg" in data) {
+          showFlashMessage({
+            message: data?.msg,
+            description: getFirstErrorMessage(data.errors),
+            type: "danger",
+          });
+          return;
+        }
+        return;
+      }
+      if (data.status === 200) {
+        showFlashMessage({
+          message: "Success",
+          description: data?.data?.message || "",
+          type: "success",
+        });
+
+        // navigation.navigate("VerifyScreen", {
+        //   previous_screen: "SignUpScreen",
+        // });
+      }
+    },
+    onError: () => {
+      showFlashMessage({
+        message: "Request failed",
+        description: "Server error",
+        type: "danger",
+      });
+    },
+  });
+
   return {
     hideToast,
     showToast,
+    mutation
   };
 };
 

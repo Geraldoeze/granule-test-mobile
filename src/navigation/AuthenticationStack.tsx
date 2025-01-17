@@ -12,6 +12,7 @@ import SetPasscodeScreeen from "../screens/Authentication/SetPasscodeScreen";
 import SetPasswordScreeen from "../screens/Authentication/SetPasswordScreen";
 import InformationScreen from "../screens/Authentication/InformationScreen";
 import EnableBiometricsScreen from "../screens/Onboarding/EnableBiometricsScreen";
+import VerifyInformation from "../screens/Authentication/VerifyInformation";
 
 type current = {
   progress: Animated.AnimatedInterpolation<number>;
@@ -63,6 +64,7 @@ const AuthenticationStack = () => {
       <Stack.Screen name="SetPasscodeScreen" component={SetPasscodeScreeen} />
       <Stack.Screen name="SetPasswordScreen" component={SetPasswordScreeen} />
       <Stack.Screen name="InformationScreen" component={InformationScreen} />
+      <Stack.Screen name="VerifyInformation" component={VerifyInformation} />
       <Stack.Screen
         name="EnableBiometricsScreen"
         component={EnableBiometricsScreen}

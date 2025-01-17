@@ -34,6 +34,7 @@ export const Colors = {
     dark: "#373737",
     input_color: "#4A4A68",
     background: "#F7F7FC",
+    label: "#A6A6A6",
   },
   dark: {
     light_background: "#000000",
@@ -46,6 +47,7 @@ export const Colors = {
     dark: "#373737",
     input_color: "#4A4A68",
     background: "#F7F7FC",
+    label: "#A6A6A6",
   },
 };
 

@@ -1,11 +1,11 @@
 import { StyleSheet } from "react-native";
 
-const verifyStyle = StyleSheet.create({
-  backCover: { marginVertical: 20, paddingHorizontal: 20 },
+const verifyInformation = StyleSheet.create({
+  backCover: { marginVertical: 20, paddingHorizontal: 20,  flexDirection: 'column', justifyContent: 'space-between' },
 
   content: { paddingHorizontal: 20 },
 
-  text: { fontFamily: "Outfit Bold", fontSize: 40, marginBottom: 16 },
+  text: { fontFamily: "Outfit Bold", fontSize: 36, marginBottom: 16 },
   text1: {
     fontSize: 18,
     fontFamily: "Outfit Regular",
@@ -34,10 +34,10 @@ const verifyStyle = StyleSheet.create({
     fontSize: 24,
   },
   inputCover: {
-    marginVertical: 20,
+    marginVertical: 4,
   },
   inputStyle: {
-    fontFamily: "Outfit Regular",
+    fontFamily: "Outfit Medium",
     fontSize: 18,
   },
   bottomTextCover: {
@@ -87,4 +87,4 @@ const verifyStyle = StyleSheet.create({
   },
 });
 
-export default verifyStyle;
+export default verifyInformation;

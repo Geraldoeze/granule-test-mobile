@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
+//
+import FlashMessage from "react-native-flash-message";
+
 // screen
 import AuthenticationStack from "./AuthenticationStack";
 
 // ui
 import SplashLoading from "../components/display/SplashLoading";
-import Toastable from "react-native-toastable";
+
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export type RootStackParamList = {
@@ -23,6 +26,7 @@ export type RootStackParamList = {
   SetPasswordScreen: undefined;
   InformationScreen: undefined;
   EnableBiometricsScreen: undefined;
+  VerifyInformation: undefined;
 };
 
 export function useAppNavigation() {
@@ -46,15 +50,7 @@ const MainStack = () => {
   ) : (
     <>
       <AuthenticationStack />
-      <Toastable
-        statusMap={{
-          success: "green",
-          danger: "red",
-          warning: "yellow",
-          info: "blue",
-        }}
-        offset={top}
-      />
+      <FlashMessage position="top" />
     </>
   );
 };

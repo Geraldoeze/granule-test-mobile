@@ -1,6 +1,6 @@
 // React and React Native imports
-import React from "react";
-import { Linking, Text, View } from "react-native";
+import React, { useState } from "react";
+import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import { IconButton, TextInput } from "@react-native-material/core";
 
 // Third-party libraries
@@ -18,16 +18,31 @@ import { useAppNavigation } from "../../../navigation/MainStack";
 // Styles
 import styles from "./style";
 
+// utils
+import { showFlashMessage } from "../../../utils/flash-message";
+import useSignUp from "./useSignUp";
+
 const SignUpScreen = () => {
   const navigation = useAppNavigation();
   const theme = useTheme();
 
-  const handleTermsPress = () => {
-    Linking.openURL("https://granule.com/terms");
-  };
+  const [info, setInfo] = useState({
+    email: "",
+    referral_code: "",
+  });
+  const [showReferral, setShowReferral] = useState(false);
+  const { handleTermsPress, handlePrivacyPress, mutation } = useSignUp();
 
-  const handlePrivacyPress = () => {
-    Linking.openURL("https://granule.com/privacy");
+  const handleSubmit = () => {
+    if (!info.email) {
+      showFlashMessage({
+        message: "Error",
+        description: "Please enter your email",
+        type: "danger",
+      });
+      return;
+    }
+    mutation.mutate(info);
   };
 
   return (
@@ -46,7 +61,7 @@ const SignUpScreen = () => {
             style={[
               styles.text2,
               {
-                color: Colors.general.primary,
+                color: theme.label,
               },
             ]}
           >
@@ -56,7 +71,11 @@ const SignUpScreen = () => {
             variant="standard"
             label=""
             color={Colors.general.primary}
-            style={{}}
+            inputStyle={styles.inputStyle}
+            value={info.email}
+            onChangeText={(email) =>
+              setInfo((prev) => ({ ...prev, email: email }))
+            }
             trailing={
               <IconButton
                 icon={(props) => (
@@ -66,36 +85,67 @@ const SignUpScreen = () => {
                     color={"#2F3233"}
                   />
                 )}
-                onPress={() => {}}
+                onPress={() => setInfo((prev) => ({ ...prev, email: "" }))}
               />
             }
           />
         </View>
+        {showReferral && (
+          <View style={styles.inputCover}>
+            <Text
+              style={[
+                styles.text2,
+                {
+                  color: theme.label,
+                },
+              ]}
+            >
+              Referral code
+            </Text>
+            <TextInput
+              variant="standard"
+              label=""
+              color={Colors.general.primary}
+              inputStyle={styles.inputStyle}
+              value={info.referral_code}
+              onChangeText={(code) =>
+                setInfo((prev) => ({ ...prev, referral_code: code }))
+              }
+            />
+          </View>
+        )}
 
-        <Text
-          style={[
-            styles.text3,
-            {
-              color: Colors.light.auth_text3,
-            },
-          ]}
-        >
-          Referral Code
-        </Text>
+        <Pressable onPress={() => setShowReferral(!showReferral)}>
+          <Text
+            style={[
+              styles.text3,
+              {
+                color: Colors.light.auth_text3,
+              },
+            ]}
+          >
+            Referral Code
+          </Text>
+        </Pressable>
         <PrimaryButton
-          onPress={() =>
-            navigation.navigate("VerifyScreen", {
-              previous_screen: "SignUpScreen",
-            })
-          }
+          onPress={handleSubmit}
           button_title={"Continue"}
           container_style={{
             borderRadius: 16,
-            marginVertical: 30,
+            marginVertical: 20,
             backgroundColor: Colors.general.primary,
           }}
           text_style={{ color: "white" }}
         />
+        <View>
+          {mutation.isPending && (
+            <ActivityIndicator
+              style={{ marginBottom: 10, alignSelf: "center" }}
+              color={Colors.general.primary}
+              size="small"
+            />
+          )}
+        </View>
         <View style={{}}>
           <Text
             style={[

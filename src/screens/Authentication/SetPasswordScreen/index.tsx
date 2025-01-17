@@ -20,6 +20,11 @@ import styles from "./style";
 
 // Functions
 import useSetPassword from "./useSetPassword";
+import Passcode from "../../../components/display/Passcode";
+import { showFlashMessage } from "../../../utils/flash-message";
+import { useSelector } from "react-redux";
+import { selectAuthenticatData } from "../../../store/signup/selectors";
+import { ActivityIndicator } from "react-native";
 
 const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
 const MODAL_HEIGHT = SCREEN_HEIGHT * 0.4;
@@ -27,15 +32,49 @@ const MODAL_HEIGHT = SCREEN_HEIGHT * 0.4;
 const SetPasswordScreeen = () => {
   const navigation = useAppNavigation();
   const theme = useTheme();
+  const authenticatData = useSelector(selectAuthenticatData);
+
   const [visible, setVisible] = useState(false);
+  const [pin, setPin] = useState({
+    passcode: "",
+    reEnteredPasscode: "",
+  });
   const slideAnim = useRef(new Animated.Value(MODAL_HEIGHT)).current;
 
-  const { showToast, hideToast } = useSetPassword();
+  const { showToast, hideToast, mutation } = useSetPassword();
 
-  const handle_confirm = () => {
-    showToast(setVisible, slideAnim);
+  const handlePasscode = (code: string) => {
+    setPin({ ...pin, passcode: code });
+  };
+  const handleReEnteredPasscode = (code: string) => {
+    setPin({ ...pin, reEnteredPasscode: code });
   };
 
+  const handle_confirm = () => {
+    console.log(pin);
+    if (pin.passcode !== pin.reEnteredPasscode) {
+      showFlashMessage({
+        message: "Error",
+        description: "Passcodes do not match",
+        type: "danger",
+      });
+      return;
+    }
+    mutation.mutate(
+      {
+        token: authenticatData.token,
+        passcode: pin.passcode,
+        otp: authenticatData.otp,
+      },
+      {
+        onSuccess: (data) => {
+          if (data.status === 201) {
+            showToast(setVisible, slideAnim);
+          }
+        },
+      }
+    );
+  };
   return (
     <AuthBackground>
       <View style={styles.contain}>
@@ -43,17 +82,19 @@ const SetPasswordScreeen = () => {
 
         <View style={styles.backCover}>
           <Text style={[styles.text, { color: theme.auth_text1 }]}>
-            Set new password
+            Set new passcode
           </Text>
           <Text style={[styles.text1, { color: theme.auth_text2 }]}>
-            Enter your new password
+            Enter your new passcode
           </Text>
-          <AuthPasswordInput label="Password" />
-          <AuthPasswordInput label="Retype Password" />
-
+          <Passcode onPinComplete={handlePasscode} label="Set passcode" />
+          <Passcode
+            onPinComplete={handleReEnteredPasscode}
+            label="Re-Enter passcode"
+          />
           <PrimaryButton
             onPress={handle_confirm}
-            button_title={"Reset Password"}
+            button_title={"Reset Passcode"}
             container_style={{
               borderRadius: 16,
               marginVertical: 10,
@@ -61,6 +102,13 @@ const SetPasswordScreeen = () => {
             }}
             text_style={{ color: "white" }}
           />
+          {mutation.isPending && (
+            <ActivityIndicator
+              style={{ marginBottom: 10, alignSelf: "center" }}
+              color={Colors.general.primary}
+              size="small"
+            />
+          )}
         </View>
         {visible && (
           <Animated.View

@@ -1,5 +1,5 @@
-import React from "react";
-import { View, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, Keyboard } from "react-native";
 import { OtpInput } from "react-native-otp-entry";
 import { Colors, useTheme } from "../../constants/colors";
 import { Text } from "@react-native-material/core";
@@ -11,6 +11,13 @@ interface PasscodeProps {
 
 const Passcode: React.FC<PasscodeProps> = ({ onPinComplete, label }) => {
   const theme = useTheme();
+  const [pin, setPin] = useState("");
+
+  const handlePasscode = (code: string) => {
+    setPin(code);
+    Keyboard.dismiss();
+    onPinComplete(code);
+  };
 
   return (
     <View style={styles.cover}>
@@ -22,7 +29,7 @@ const Passcode: React.FC<PasscodeProps> = ({ onPinComplete, label }) => {
           type="numeric"
           focusStickBlinkingDuration={500}
           secureTextEntry={true}
-          onFilled={(text) => onPinComplete(text)}
+          onFilled={(text) => handlePasscode(text)}
           textInputProps={{
             accessibilityLabel: "Set passcode",
           }}

@@ -6,8 +6,10 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 type AuthPasswordInput = {
   label: string;
+  value: string;
+  onChangeText: (text: string) => void;
 };
-const AuthPasswordInput = ({ label }: AuthPasswordInput) => {
+const AuthPasswordInput = ({ label, value, onChangeText }: AuthPasswordInput) => {
   const theme = useTheme();
   const [show_password, setShow_password] = useState(false);
   return (
@@ -22,6 +24,8 @@ const AuthPasswordInput = ({ label }: AuthPasswordInput) => {
         secureTextEntry={true} // Toggle secure text entry
         passwordRules={"*"}
         style={{}}
+        value={value}
+        onChangeText={onChangeText}
         inputStyle={{}}
         trailing={
           <IconButton
