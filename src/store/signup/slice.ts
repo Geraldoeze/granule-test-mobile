@@ -13,12 +13,26 @@ const initialState: SignupState = {
     firstName: "",
     lastName: "",
     phoneNumber: "",
+    occupation: "",
+    annualIncomeRange: "",
+    otherIncomeSource: "",
+    verification_type: "",
+    verification_id: "",
+  },
+  politicalInfo: {
+    politicalFigure: false,
+    politicalOffice: "",
+    politicalPosition: "",
+    politicalRelations: "",
+    politicalOfficeDate: "",
+    currentlyHoldingPosition: false,
   },
   addressInfo: {
-    street: "",
-    city: "",
+    address: "",
+    area: "",
     state: "",
-    zipCode: "",
+    lga: "",
+    country: "",
   },
 
   currentStep: 1,
@@ -45,6 +59,12 @@ const signupSlice = createSlice({
     ) => {
       state.personalInfo = { ...state.personalInfo, ...action.payload };
     },
+    updatePoliticalInfo: (
+      state,
+      action: PayloadAction<Partial<SignupState["politicalInfo"]>>
+    ) => {
+      state.politicalInfo = { ...state.politicalInfo, ...action.payload };
+    },
     updateAddressInfo: (
       state,
       action: PayloadAction<Partial<SignupState["addressInfo"]>>
@@ -69,6 +89,7 @@ const signupSlice = createSlice({
 export const {
   updateAuthenticationData,
   updatePersonalInfo,
+  updatePoliticalInfo,
   updateAddressInfo,
   setCurrentStep,
   setSubmitting,

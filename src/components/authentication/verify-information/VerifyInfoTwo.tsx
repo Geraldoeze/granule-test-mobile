@@ -2,6 +2,8 @@ import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 import PrimaryButton from "../../display/PrimaryButton";
 import { Colors, useTheme } from "../../../constants/colors";
+import { updatePoliticalInfo } from "../../../store/signup/slice";
+import { useDispatch } from "react-redux";
 
 const VerifyInfoTwo = ({
   handleNextPage,
@@ -9,6 +11,16 @@ const VerifyInfoTwo = ({
   handleNextPage: (id: number) => void;
 }) => {
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const handleNext = (page: number) => {
+    if (page === 3) {
+      dispatch(updatePoliticalInfo({ politicalFigure: true }));
+      handleNextPage(page);
+    } else if (page === 4) {
+      dispatch(updatePoliticalInfo({ politicalFigure: false }));
+      handleNextPage(page);
+    }
+  };
   return (
     <View style={styles.backCover}>
       <View style={{ height: "50%" }}>
@@ -19,7 +31,7 @@ const VerifyInfoTwo = ({
 
       <View style={{}}>
         <PrimaryButton
-          onPress={() => handleNextPage(4)}
+          onPress={() => handleNext(4)}
           button_title={"No, I’m not"}
           container_style={{
             borderRadius: 16,
@@ -30,7 +42,7 @@ const VerifyInfoTwo = ({
           text_style={{ color: Colors.general.primary }}
         />
         <PrimaryButton
-          onPress={() => handleNextPage(3)}
+          onPress={() => handleNext(3)}
           button_title={"Yes, I am"}
           container_style={{
             borderRadius: 16,

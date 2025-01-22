@@ -1,5 +1,5 @@
 // React and React Native imports
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import { TextInput } from "@react-native-material/core";
 
@@ -20,16 +20,31 @@ import styles from "./style";
 import useSignIn from "./useSignIn";
 import { showFlashMessage } from "../../../utils/flash-message";
 import { ActivityIndicator } from "react-native";
+import SecureAuthStorage from "../../../utils/auth-storage";
 
 const SignInScreen = () => {
   const theme = useTheme();
   const navigation = useAppNavigation();
 
-  const { mutation } = useSignIn();
+  const { mutation, handleSuccessfulLogin } = useSignIn();
   const [auth, setAuth] = useState({
     email: "",
     passcode: "",
   });
+
+  // In your component:
+  const checkStoredEmail = async () => {
+    const email = await SecureAuthStorage.getEmail();
+    if (email) {
+      // Use the email (e.g., pre-fill the email field)
+      setAuth((prev) => ({ ...prev, email: email }));
+    }
+  };
+
+  // Call this in useEffect if you want to check on component mount
+  useEffect(() => {
+    checkStoredEmail();
+  }, []);
 
   const handleLogin = () => {
     if (!auth.email || !auth.passcode) {
@@ -40,8 +55,13 @@ const SignInScreen = () => {
       });
       return;
     }
-    // mutation.mutate(auth);
-    navigation.navigate("VerifyInformation")
+    mutation.mutate(auth, {
+      onSuccess: (data) => {
+        if (data.status === 200) {
+          handleSuccessfulLogin(auth.email, auth.passcode);
+        }
+      },
+    });
   };
   return (
     <AuthBackground>

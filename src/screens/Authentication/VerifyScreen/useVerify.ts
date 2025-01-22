@@ -8,17 +8,22 @@ import {
   VerifyAccountProps,
   VerifyOtpProps,
 } from "../../../interface/authenticattion";
-import { apiVerifyAccount, apiVerifyOtp } from "../../../api/authentication";
+import {
+  apiFogotPassword,
+  apiResendVerification,
+  apiVerifyAccount,
+  apiVerifyOtp,
+} from "../../../api/authentication";
 import { useAppNavigation } from "../../../navigation/MainStack";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateAuthenticationData } from "../../../store/signup/slice";
+import { selectAuthenticatData } from "../../../store/signup/selectors";
 
 /**
  * Handle navigation based on the previous screen.
  * @param previous_screen - The name of the previous screen.
  * @param navigation - The navigation object to handle screen transitions.
  * @param animation - The animated value for toast animation.
- * @param setVisible - A function to update visibility of the toast.
  */
 /**
  * Hide a toast animation.
@@ -37,49 +42,8 @@ import { updateAuthenticationData } from "../../../store/signup/slice";
 
 const useVerify = () => {
   const navigation = useAppNavigation();
+  const authenticatData = useSelector(selectAuthenticatData);
   const dispatch = useDispatch();
-  const formatInput = (value: string): string => {
-    const digitsOnly = value.replace(/\D/g, ""); // Remove all non-digit characters
-    return digitsOnly.split("").slice(0, 6).join("-"); // Add dashes after digits
-  };
-
-  const showToast = (animation: Animated.Value, navigation: any): void => {
-    // Show the toast with animation
-    Animated.timing(animation, {
-      toValue: 0, // Move to screen bottom
-      duration: 400,
-      useNativeDriver: true,
-    }).start(() => {});
-  };
-
-  const hideToast = (
-    animation: Animated.Value,
-    callback?: () => void
-  ): void => {
-    // Hide the toast with animation
-    Animated.timing(animation, {
-      toValue: 200, // Move off-screen
-      duration: 400,
-      useNativeDriver: true,
-    }).start(() => {
-      if (callback) callback(); // Execute the callback after hiding
-    });
-  };
-  const handleNavigation = (
-    previous_screen: string,
-    navigation: NavigationProp<any>,
-    animation: Animated.Value,
-    setVisible: React.Dispatch<React.SetStateAction<boolean>>
-  ) => {
-    if (previous_screen === "SignInScreen") {
-    } else if (previous_screen === "SignUpScreen") {
-      // open modal
-      setVisible(true);
-      showToast(animation, navigation);
-    } else if (previous_screen === "ForgotPasswordScreen") {
-      navigation.navigate("SetPasswordScreen");
-    }
-  };
 
   const verifyOtpMutation = useMutation({
     mutationFn: (values: VerifyOtpProps) => apiVerifyOtp(values),
@@ -101,13 +65,6 @@ const useVerify = () => {
           description: data?.data?.message || "",
           type: "success",
         });
-        const result = dispatch(
-          updateAuthenticationData({
-            otp: data?.data?.data?.otp,
-          })
-        );
-        console.log("Dispatchresult:", result);
-        navigation.navigate("SetPasswordScreen");
       }
     },
     onError: () => {
@@ -150,11 +107,49 @@ const useVerify = () => {
     },
   });
 
+  const handleResend = async (
+    previous_screen: string,
+    canResend: boolean,
+    setCanResend: React.Dispatch<React.SetStateAction<boolean>>,
+    setCountdown: React.Dispatch<React.SetStateAction<number>>
+  ) => {
+    if (canResend) {
+      // Your resend logic here
+      let resend;
+      if (previous_screen === "SignUpScreen") {
+        resend = await apiResendVerification(authenticatData?.email.toString());
+        if (resend.status === 200) {
+          showFlashMessage({
+            message: "Success",
+            description: resend.data.message,
+            type: "success",
+          });
+        }
+      } else if (previous_screen === "ForgotPasswordScreen") {
+        resend = await apiFogotPassword(authenticatData?.email.toString());
+        if (resend.status === 200) {
+          showFlashMessage({
+            message: "Success",
+            description: resend.data.message,
+            type: "success",
+          });
+          const result = dispatch(
+            updateAuthenticationData({
+              token: resend?.data?.data?.token,
+            })
+          );
+          console.log("Dispatchresult:", result);
+        }
+      }
+
+      setCountdown(120); // Reset countdown
+      setCanResend(false);
+    }
+  };
+
   return {
-    hideToast,
-    showToast,
-    formatInput,
-    handleNavigation,
+    
+    handleResend,
     verifyAccountMutation,
     verifyOtpMutation,
   };

@@ -22,7 +22,27 @@ export interface VerifyOtpProps {
 }
 
 export interface ResetPasscodeProps {
-    token: string;
-    passcode: string;
-    otp: string;
+  token: string;
+  passcode: string;
+  otp: string;
+}
+
+export interface CompleteProfileProps {
+  email: string;
+  verification_id: string;
+  verification_type: string;
+  country: string;
+  state: string;
+  address: string;
+  lga: string;
+  area: string;
+  occupation: string;
+  annual_income: string;
+  other_income_sources: string;
+  political_person: boolean;
+  political_current_past: string;
+  political_office: string;
+  political_office_date: string;
+  currently_holding: boolean;
+  related_to_political: string;
 }

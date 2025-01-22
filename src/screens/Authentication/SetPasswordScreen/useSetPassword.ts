@@ -67,7 +67,7 @@ const useSetPassword = () => {
   return {
     hideToast,
     showToast,
-    mutation
+    mutation,
   };
 };
 

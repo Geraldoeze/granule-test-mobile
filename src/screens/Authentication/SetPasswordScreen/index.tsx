@@ -13,7 +13,6 @@ import PrimaryButton from "../../../components/display/PrimaryButton";
 import AuthBackground from "../../../components/display/AuthBackground";
 import { useAppNavigation } from "../../../navigation/MainStack";
 import AuthBackBtn from "../../../components/display/AuthBackBtn";
-import AuthPasswordInput from "../../../components/display/AuthPasswordInput";
 
 // Styles
 import styles from "./style";
@@ -25,23 +24,21 @@ import { showFlashMessage } from "../../../utils/flash-message";
 import { useSelector } from "react-redux";
 import { selectAuthenticatData } from "../../../store/signup/selectors";
 import { ActivityIndicator } from "react-native";
-
-const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
-const MODAL_HEIGHT = SCREEN_HEIGHT * 0.4;
+import { ToastWrapper } from "../../../components/display/ToastWrapper";
+import { useToast } from "../../../hooks/useToast";
 
 const SetPasswordScreeen = () => {
   const navigation = useAppNavigation();
   const theme = useTheme();
+  const { visible, slideAnim, showToast, hideToast } = useToast();
   const authenticatData = useSelector(selectAuthenticatData);
 
-  const [visible, setVisible] = useState(false);
   const [pin, setPin] = useState({
     passcode: "",
     reEnteredPasscode: "",
   });
-  const slideAnim = useRef(new Animated.Value(MODAL_HEIGHT)).current;
 
-  const { showToast, hideToast, mutation } = useSetPassword();
+  const { mutation } = useSetPassword();
 
   const handlePasscode = (code: string) => {
     setPin({ ...pin, passcode: code });
@@ -51,7 +48,6 @@ const SetPasswordScreeen = () => {
   };
 
   const handle_confirm = () => {
-    console.log(pin);
     if (pin.passcode !== pin.reEnteredPasscode) {
       showFlashMessage({
         message: "Error",
@@ -68,8 +64,8 @@ const SetPasswordScreeen = () => {
       },
       {
         onSuccess: (data) => {
-          if (data.status === 201) {
-            showToast(setVisible, slideAnim);
+          if (data.status === 200) {
+            showToast();
           }
         },
       }
@@ -110,20 +106,10 @@ const SetPasswordScreeen = () => {
             />
           )}
         </View>
-        {visible && (
-          <Animated.View
-            style={[
-              styles.toastContainer,
-              {
-                transform: [{ translateY: slideAnim }],
-              },
-            ]}
-          >
-            <PasswordReset
-              close_handler={() => hideToast(setVisible, slideAnim)}
-            />
-          </Animated.View>
-        )}
+
+        <ToastWrapper visible={visible} slideAnim={slideAnim}>
+          <PasswordReset close_handler={hideToast} />
+        </ToastWrapper>
       </View>
     </AuthBackground>
   );
@@ -133,6 +119,10 @@ const PasswordReset = ({ close_handler }: { close_handler: () => void }) => {
   const theme = useTheme();
   const navigation = useAppNavigation();
 
+  const handleNavigation = () => {
+    close_handler();
+    navigation.navigate("SignInScreen");
+  };
   return (
     <View
       style={[
@@ -153,7 +143,7 @@ const PasswordReset = ({ close_handler }: { close_handler: () => void }) => {
       </View>
       <View style={{ width: "100%" }}>
         <PrimaryButton
-          onPress={close_handler}
+          onPress={handleNavigation}
           button_title={"Done"}
           container_style={{
             borderRadius: 16,

@@ -5,7 +5,7 @@ import SignInScreen from "../screens/Authentication/SignInScreen";
 import { RootStackParamList } from "./MainStack";
 import SignUpScreen from "../screens/Authentication/SignUpScreen";
 import ForgotPasswordScreen from "../screens/Authentication/ForgotPasswordScreen";
-import HomeScreen from "../screens/HomeScreen";
+import HomeScreen from "../screens/Dashboard/HomeScreen";
 import VerifyScreen from "../screens/Authentication/VerifyScreen";
 import { Animated } from "react-native";
 import SetPasscodeScreeen from "../screens/Authentication/SetPasscodeScreen";
@@ -13,6 +13,7 @@ import SetPasswordScreeen from "../screens/Authentication/SetPasswordScreen";
 import InformationScreen from "../screens/Authentication/InformationScreen";
 import EnableBiometricsScreen from "../screens/Onboarding/EnableBiometricsScreen";
 import VerifyInformation from "../screens/Authentication/VerifyInformation";
+import BiometricsLoginScreen from "../screens/Authentication/BiometricsLoginScreen";
 
 type current = {
   progress: Animated.AnimatedInterpolation<number>;
@@ -68,6 +69,10 @@ const AuthenticationStack = () => {
       <Stack.Screen
         name="EnableBiometricsScreen"
         component={EnableBiometricsScreen}
+      />
+      <Stack.Screen
+        name="BiometricsLoginScreen"
+        component={BiometricsLoginScreen}
       />
     </Stack.Navigator>
   );

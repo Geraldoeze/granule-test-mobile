@@ -32,13 +32,13 @@ const setPasswordStyle = StyleSheet.create({
   },
   text5: {
     fontFamily: "Outfit Bold",
-    fontSize: 24,
+    fontSize: 22,
     marginVertical: 10,
     textAlign: "center",
   },
   text6: {
     fontFamily: "Outfit Regular",
-    fontSize: 24,
+    fontSize: 20,
     textAlign: "center",
     marginVertical: 6,
   },
@@ -58,18 +58,7 @@ const setPasswordStyle = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
-  toastContainer: {
-    position: "absolute",
-    justifyContent: "flex-end",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 5,
-  },
+  
 });
 
 export default setPasswordStyle;

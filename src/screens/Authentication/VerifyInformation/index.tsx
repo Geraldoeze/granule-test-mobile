@@ -1,6 +1,14 @@
 // React and React Native imports
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Button, Linking, Pressable, Text, View } from "react-native";
+import {
+  Animated,
+  Button,
+  Dimensions,
+  Linking,
+  Pressable,
+  Text,
+  View,
+} from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { IconButton, TextInput } from "@react-native-material/core";
 
@@ -26,6 +34,8 @@ import VerifyInfoTwo from "../../../components/authentication/verify-information
 import styles from "./style";
 import VerifyInfoThree from "../../../components/authentication/verify-information/VerifyInfoThree";
 import VerifyInfoFour from "../../../components/authentication/verify-information/VerifyInfoFour";
+import { useSelector } from "react-redux";
+import { selectPoliticalInfo } from "../../../store/signup/selectors";
 
 type VerifyInformationProps = NativeStackScreenProps<
   RootStackParamList,
@@ -37,7 +47,7 @@ const VerifyInformation: React.FC<VerifyInformationProps> = ({ route }) => {
   const theme = useTheme();
 
   const [informaton, setInformation] = useState(1);
-
+  const politicalInfo = useSelector(selectPoliticalInfo);
   const handleNavigationClick = () => {};
 
   const handleBackClick = () => {
@@ -48,18 +58,18 @@ const VerifyInformation: React.FC<VerifyInformationProps> = ({ route }) => {
     } else if (informaton === 3) {
       setInformation(2);
     } else if (informaton === 4) {
-      setInformation(3);
-    } 
+      const politicalPerson = politicalInfo.politicalFigure;
+      setInformation(politicalPerson ? 3 : 2);
+    }
   };
 
   const handleNextPage = (page: number) => {
     setInformation(page);
   };
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, position: "relative" }}>
       <AuthBackground>
         <AuthBackBtn onpress={handleBackClick} />
-
         {informaton === 1 && <VerifyInfoOne handleNextPage={handleNextPage} />}
         {informaton === 2 && <VerifyInfoTwo handleNextPage={handleNextPage} />}
         {informaton === 3 && (

@@ -12,6 +12,7 @@ import AuthenticationStack from "./AuthenticationStack";
 import SplashLoading from "../components/display/SplashLoading";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import HomeStackScreen from "./HomeStack";
 
 export type RootStackParamList = {
   SignInScreen: undefined;
@@ -27,16 +28,19 @@ export type RootStackParamList = {
   InformationScreen: undefined;
   EnableBiometricsScreen: undefined;
   VerifyInformation: undefined;
+  BiometricsLoginScreen: undefined;
 };
 
 export function useAppNavigation() {
   return useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 }
 
+
 const MainStack = () => {
   const [isSplashVisible, setIsSplashVisible] = useState(true);
   const { top } = useSafeAreaInsets();
-
+  // const isAuthenticated = useSelector((state) => state.auth.isAuthenticated); // Example: fetch authentication state
+const isAuthenticated = true
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsSplashVisible(false);
@@ -49,7 +53,11 @@ const MainStack = () => {
     <SplashLoading />
   ) : (
     <>
-      <AuthenticationStack />
+      {isAuthenticated ? (
+        <HomeStackScreen /> // Show main app stack if authenticated
+      ) : (
+        <AuthenticationStack /> // Show authentication stack if not authenticated
+      )}
       <FlashMessage position="top" />
     </>
   );

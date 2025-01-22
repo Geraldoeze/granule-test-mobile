@@ -27,11 +27,11 @@ const verifyStyle = StyleSheet.create({
   },
   text5: {
     fontFamily: "Outfit Bold",
-    fontSize: 24,
+    fontSize: 22,
   },
   text6: {
     fontFamily: "Outfit Regular",
-    fontSize: 24,
+    fontSize: 20,
   },
   inputCover: {
     marginVertical: 20,
@@ -60,31 +60,7 @@ const verifyStyle = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 45,
   },
-  // toastContainer: {
-  //   position: "absolute",
-  //   bottom: 0,
-  //   width: "100%",
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  //   padding: 10,
-  // },
-  toastContainer: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 5,
-  },
+  
 });
 
 export default verifyStyle;

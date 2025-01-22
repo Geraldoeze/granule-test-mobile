@@ -33,13 +33,19 @@ import styles from "./style";
 // Function
 import useVerify from "./useVerify";
 import { selectAuthenticatData } from "../../../store/signup/selectors";
-import { formatTime, removeDashes } from "../../../utils/sub-functions";
+import {
+  formatInput,
+  formatTime,
+  removeDashes,
+} from "../../../utils/sub-functions";
 import { showFlashMessage } from "../../../utils/flash-message";
 import {
   apiFogotPassword,
   apiResendVerification,
 } from "../../../api/authentication";
 import { updateAuthenticationData } from "../../../store/signup/slice";
+import { ToastWrapper } from "../../../components/display/ToastWrapper";
+import { useToast } from "../../../hooks/useToast";
 
 type VerifyScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -48,23 +54,18 @@ type VerifyScreenProps = NativeStackScreenProps<
 
 const VerifyScreen: React.FC<VerifyScreenProps> = ({ route }) => {
   const { previous_screen } = route.params;
-  const [visible, setVisible] = useState(false);
-  const animation = useRef(new Animated.Value(200)).current; // Start off-screen (200px below)
   const navigation = useAppNavigation();
   const theme = useTheme();
   const [inputValue, setInputValue] = useState("");
   const [canResend, setCanResend] = useState(false);
   const [countdown, setCountdown] = useState(120); // 120 seconds = 2 minutes
-  const {
-    formatInput,
-    hideToast,
-    showToast,
-    handleNavigation,
-    verifyAccountMutation,
-    verifyOtpMutation,
-  } = useVerify();
+  const { handleResend, verifyAccountMutation, verifyOtpMutation } =
+    useVerify();
+  const { visible, slideAnim, showToast, hideToast } = useToast();
+  let toastTimer: NodeJS.Timeout | null = null; // Timer reference to handle cleanup
   const authenticatData = useSelector(selectAuthenticatData);
   const dispatch = useDispatch();
+
   useEffect(() => {
     if (countdown > 0) {
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
@@ -73,55 +74,32 @@ const VerifyScreen: React.FC<VerifyScreenProps> = ({ route }) => {
       setCanResend(true);
     }
   }, [countdown]);
-  const handleResend = async () => {
-    if (canResend) {
-      // Your resend logic here
-      let resend;
-      if (previous_screen === "SignUpScreen") {
-        resend = await apiResendVerification(authenticatData?.email.toString());
-        if (resend.status === 200) {
-          showFlashMessage({
-            message: "Success",
-            description: resend.data.message,
-            type: "success",
-          });
-        }
-      } else if (previous_screen === "ForgotPasswordScreen") {
-        resend = await apiFogotPassword(authenticatData?.email.toString());
-        if (resend.status === 200) {
-          showFlashMessage({
-            message: "Success",
-            description: resend.data.message,
-            type: "success",
-          });
-          const result = dispatch(
-            updateAuthenticationData({
-              token: resend?.data?.data?.token,
-            })
-          );
-          console.log("Dispatchresult:", result);
-        }
-      }
 
-      setCountdown(120); // Reset countdown
-      setCanResend(false);
-    }
-  };
-
+  // handle OTP input value change
   const handleInputChange = (value: string) => {
-    const formatted = formatInput(value);
-    setInputValue(formatted);
-  };
-
-  const closeToast = () => {
-    console.log("run");
-    hideToast(animation, () => setVisible(false));
+    const format = formatInput(value);
+    setInputValue(format);
   };
 
   const handleNavigationClick = () => {
-    handleNavigation(previous_screen, navigation, animation, setVisible);
+    if (previous_screen === "SignInScreen") {
+    } else if (previous_screen === "SignUpScreen") {
+      showToast();
+      setTimeout(() => {
+        hideToast();
+        navigation.navigate("SetPasscodeScreen");
+      }, 3000);
+    } else if (previous_screen === "ForgotPasswordScreen") {
+      navigation.navigate("SetPasswordScreen");
+    }
   };
 
+  // handle Email OTP resend
+  const handleResendEmail = () => {
+    handleResend(previous_screen, canResend, setCanResend, setCountdown);
+  };
+
+  // handle POST request
   const handleVerify = () => {
     // check if input is valid
     if (inputValue?.length < 5) {
@@ -147,10 +125,25 @@ const VerifyScreen: React.FC<VerifyScreenProps> = ({ route }) => {
         }
       );
     } else if (previous_screen === "ForgotPasswordScreen") {
-      verifyOtpMutation.mutate({
-        token: authenticatData.token,
-        otp: removeDashes(inputValue),
-      });
+      verifyOtpMutation.mutate(
+        {
+          token: authenticatData.token,
+          otp: removeDashes(inputValue),
+        },
+        {
+          onSuccess: (data) => {
+            if (data.status === 200) {
+              const result = dispatch(
+                updateAuthenticationData({
+                  otp: removeDashes(inputValue),
+                })
+              );
+              console.log("Dispatchresult:", result);
+              navigation.navigate("SetPasswordScreen");
+            }
+          },
+        }
+      );
     }
   };
   return (
@@ -197,7 +190,10 @@ const VerifyScreen: React.FC<VerifyScreenProps> = ({ route }) => {
                 Change email
               </Text>
             </Pressable>
-            <Pressable onPress={handleResend} style={{ flexDirection: "row" }}>
+            <Pressable
+              onPress={handleResendEmail}
+              style={{ flexDirection: "row" }}
+            >
               <Text style={[styles.text4, { color: theme.auth_text3 }]}>
                 {!canResend ? "Resend " : ""}
               </Text>
@@ -229,35 +225,16 @@ const VerifyScreen: React.FC<VerifyScreenProps> = ({ route }) => {
         </View>
       </AuthBackground>
 
-      {visible && (
-        <Animated.View
-          style={[
-            styles.toastContainer,
-            { transform: [{ translateY: animation }] },
-          ]}
-        >
-          <OtpVerified close_handler={closeToast} />
-        </Animated.View>
-      )}
+      <ToastWrapper visible={visible} slideAnim={slideAnim}>
+        <OtpVerified />
+      </ToastWrapper>
     </View>
   );
 };
 
-const OtpVerified = ({ close_handler }: { close_handler: () => void }) => {
+const OtpVerified = () => {
   const theme = useTheme();
-  const navigation = useAppNavigation();
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      close_handler();
-      console.log("running");
-      // Navigate after the toast is fully shown
-      navigation.navigate("SetPasscodeScreen");
-    }, 4000);
-
-    // Cleanup the timeout when the component unmounts
-    return () => clearTimeout(timer);
-  }, [close_handler]);
   return (
     <View style={[styles.otpCover]}>
       <Icon name="check-circle-fill" size={60} color="#31D0AA" />

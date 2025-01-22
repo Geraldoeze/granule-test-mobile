@@ -1,13 +1,6 @@
 // React & React Native Imports
 import React, { useRef, useState } from "react";
-import {
-  ActivityIndicator,
-  Animated,
-  Dimensions,
-  Keyboard,
-  Text,
-  View,
-} from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 
 // Third-party Libraries
 import Icon from "react-native-vector-icons/Octicons";
@@ -30,25 +23,23 @@ import useSetPasscode from "./useSetPasscode";
 import { useSelector } from "react-redux";
 import { selectAuthenticatData } from "../../../store/signup/selectors";
 import { showFlashMessage } from "../../../utils/flash-message";
-
-const { height: SCREEN_HEIGHT, width: SCREEN_WIDTH } = Dimensions.get("window");
-const MODAL_HEIGHT = SCREEN_HEIGHT * 0.4;
+import { ToastWrapper } from "../../../components/display/ToastWrapper";
+import { useToast } from "../../../hooks/useToast";
+import SecureAuthStorage from "../../../utils/auth-storage";
 
 const SetPasscodeScreeen = () => {
   const navigation = useAppNavigation();
   const theme = useTheme();
-  const [visible, setVisible] = useState(false);
-  const slideAnim = useRef(new Animated.Value(MODAL_HEIGHT)).current;
   const [pin, setPin] = useState({
     passcode: "",
     reEnteredPasscode: "",
   });
   const authenticatData = useSelector(selectAuthenticatData);
+  const { visible, slideAnim, showToast, hideToast } = useToast();
 
-  const { showToast, hideToast, mutation } = useSetPasscode();
+  const { mutation } = useSetPasscode();
 
   const handle_confirm = () => {
-    console.log(pin);
     if (pin.passcode !== pin.reEnteredPasscode) {
       showFlashMessage({
         message: "Error",
@@ -65,7 +56,7 @@ const SetPasscodeScreeen = () => {
       {
         onSuccess: (data) => {
           if (data.status === 201) {
-            showToast(setVisible, slideAnim);
+            showToast();
           }
         },
       }
@@ -115,30 +106,38 @@ const SetPasscodeScreeen = () => {
             />
           )}
         </View>
-        {visible && (
-          <Animated.View
-            style={[
-              styles.toastContainer,
-              {
-                transform: [{ translateY: slideAnim }],
-              },
-            ]}
-          >
-            <ProfileCreated
-              close_handler={() => hideToast(setVisible, slideAnim)}
-            />
-          </Animated.View>
-        )}
+
+        <ToastWrapper visible={visible} slideAnim={slideAnim}>
+          <ProfileCreated
+            close_handler={hideToast}
+            email={authenticatData.email}
+          />
+        </ToastWrapper>
       </View>
     </AuthBackground>
   );
 };
 
-const ProfileCreated = ({ close_handler }: { close_handler: () => void }) => {
+const ProfileCreated = ({
+  close_handler,
+  email,
+}: {
+  close_handler: () => void;
+  email: string;
+}) => {
   const theme = useTheme();
   const navigation = useAppNavigation();
 
-  const handleNavigation = () => {
+  const handleNavigation = async () => {
+    const stored = await SecureAuthStorage.storeEmail(email);
+    if (!stored) {
+      showFlashMessage({
+        message: "Error",
+        description: "Error storing email",
+        type: "danger",
+      });
+      return;
+    }
     close_handler();
     navigation.navigate("InformationScreen");
   };

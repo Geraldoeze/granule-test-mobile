@@ -5,9 +5,9 @@ import { apiLoginUser } from "../../../api/authentication";
 import { AuthProps } from "../../../interface/authenticattion";
 import { showFlashMessage } from "../../../utils/flash-message";
 import { useAppNavigation } from "../../../navigation/MainStack";
+import SecureAuthStorage from "../../../utils/auth-storage";
 import { useDispatch } from "react-redux";
 import { updateAuthenticationData } from "../../../store/signup/slice";
-import { selectAuthenticatData } from "../../../store/signup/selectors";
 
 const useSignIn = () => {
   const navigation = useAppNavigation();
@@ -34,7 +34,7 @@ const useSignIn = () => {
           type: "success",
         });
         // check if it's a  first time user
-        navigation.navigate("EnableBiometricsScreen");
+        // handleSuccessfulLogin()
       }
     },
     onError: () => {
@@ -46,7 +46,31 @@ const useSignIn = () => {
     },
   });
 
-  return { mutation };
+  const handleSuccessfulLogin = async (email: string, password: string) => {
+    dispatch(
+      updateAuthenticationData({
+        passcode: password,
+        email: email,
+      })
+    );
+    try {
+      const isFirstTime = false;
+      if (isFirstTime) {
+        navigation.navigate("EnableBiometricsScreen");
+      } else {
+        navigation.navigate("EnableBiometricsScreen");
+      }
+    } catch (error) {
+      console.error("Error storing credentials:", error);
+      showFlashMessage({
+        message: "Error storing credentials",
+        description: "An error occurred",
+        type: "danger",
+      });
+    }
+  };
+
+  return { mutation, handleSuccessfulLogin };
 };
 
 export default useSignIn;

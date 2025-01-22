@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const forgotPasswordStyle = StyleSheet.create({
+const enableBiometrics = StyleSheet.create({
   cover: {
     height: "100%",
     justifyContent: "space-between",
@@ -17,4 +17,4 @@ const forgotPasswordStyle = StyleSheet.create({
   },
 });
 
-export default forgotPasswordStyle;
+export default enableBiometrics;

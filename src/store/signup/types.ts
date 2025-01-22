@@ -10,12 +10,26 @@ export interface SignupState {
     firstName: string;
     lastName: string;
     phoneNumber: string;
+    occupation: string;
+    annualIncomeRange: string;
+    otherIncomeSource: string;
+    verification_type: string;
+    verification_id: string;
+  };
+  politicalInfo: {
+    politicalFigure: boolean;
+    politicalOffice: string;
+    politicalPosition: string;
+    politicalRelations: string;
+    politicalOfficeDate: string;
+    currentlyHoldingPosition: boolean;
   };
   addressInfo: {
-    street: string;
-    city: string;
+    country: string;
+    address: string;
+    area: string;
     state: string;
-    zipCode: string;
+    lga: string;
   };
   currentStep: number;
   isSubmitting: boolean;

@@ -3,6 +3,7 @@ import { getRequestConfiguration } from "../utils/header-helper";
 import {
   AuthProps,
   AuthSignUpProps,
+  CompleteProfileProps,
   RequestVerifyAccount,
   ResetPasscodeProps,
   VerifyAccountProps,
@@ -301,6 +302,38 @@ export const apiFogotPassword = async (email: string) => {
       data: {},
       status: "error",
       msg: e?.response?.data?.message || e?.message,
+    };
+  }
+};
+
+export const apiCompleteProfile = async (values: CompleteProfileProps) => {
+  const formData = new URLSearchParams();
+
+  // Append all form fields to FormData
+  Object.entries(values).forEach(([key, value]) => {
+    if (value !== undefined) {
+      formData.append(key, value.toString());
+    }
+  });
+  try {
+    const uri = `/auth/complete-profile`;
+
+    const cfg = getRequestConfiguration({
+      "Content-Type": "application/x-www-form-urlencoded",
+    });
+
+    // Send the POST request to log in
+    const result = await Axios.put(uri, formData.toString(), cfg);
+
+    // Return the result
+    return result;
+  } catch (e: any) {
+    // Return error response if the login fails
+    return {
+      data: {},
+      status: "error",
+      msg: e?.response?.data?.message || e?.message,
+      errors: e?.response?.data?.errors || [],
     };
   }
 };
