@@ -12,7 +12,7 @@ import AuthenticationStack from "./AuthenticationStack";
 import SplashLoading from "../components/display/SplashLoading";
 
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import HomeStackScreen from "./HomeStack";
+import DashboardStackScreen from "./DashboardStack";
 
 export type RootStackParamList = {
   SignInScreen: undefined;
@@ -54,7 +54,7 @@ const isAuthenticated = true
   ) : (
     <>
       {isAuthenticated ? (
-        <HomeStackScreen /> // Show main app stack if authenticated
+        <DashboardStackScreen /> // Show main app stack if authenticated
       ) : (
         <AuthenticationStack /> // Show authentication stack if not authenticated
       )}

@@ -44,3 +44,22 @@ export const formatInput = (value: string): string => {
   const digitsOnly = value.replace(/\D/g, ""); // Remove all non-digit characters
   return digitsOnly.split("").slice(0, 6).join("-"); // Add dashes after digits
 };
+export function getGreetingInNigeriaTime(): string {
+  const nigeriaTimeZone = 'Africa/Lagos'; // Nigeria's timezone
+  const currentDate = new Date().toLocaleString('en-US', { timeZone: nigeriaTimeZone });
+  const currentHour = new Date().toLocaleString('en-US', { 
+    timeZone: nigeriaTimeZone, 
+    hour: 'numeric', 
+    hour12: false 
+  });
+
+  const hour = parseInt(currentHour);
+
+  if (hour >= 5 && hour < 12) {
+    return 'Good morning';
+  } else if (hour >= 12 && hour < 17) {
+    return 'Good afternoon';
+  } else {
+    return 'Good evening';
+  }
+}

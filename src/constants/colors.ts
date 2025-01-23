@@ -24,6 +24,7 @@ export const Colors = {
     black: "#000000",
   },
   light: {
+    white: "#FFFFFF",
     light_background: "#F9F6FB",
     light_bg: "#A7A7A71A",
     auth_text1: "#1A0E2C",
@@ -35,8 +36,10 @@ export const Colors = {
     input_color: "#4A4A68",
     background: "#F7F7FC",
     label: "#A6A6A6",
+    text_body: "#292925",
   },
   dark: {
+    white: "#FFFFFF",
     light_background: "#000000",
     light_bg: "#A7A7A71A",
     auth_text1: "#1A0E2C",
@@ -48,6 +51,7 @@ export const Colors = {
     input_color: "#4A4A68",
     background: "#F7F7FC",
     label: "#A6A6A6",
+    text_body: "#292925",
   },
 };
 
